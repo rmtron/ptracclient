@@ -20,6 +20,14 @@ package relapps.ptrac.client.exif;
  * @author RMT
  */
 public interface IWebApi {
+
+    /**
+     * Returns the miscellaneous operations API.
+     *
+     * @return The API.
+     */
+    IApiMisc getMiscApi();
+
     /**
      * Returns the project operations API.
      *
