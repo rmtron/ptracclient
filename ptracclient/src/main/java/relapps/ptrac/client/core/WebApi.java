@@ -15,6 +15,7 @@
 package relapps.ptrac.client.core;
 
 import java.net.MalformedURLException;
+import relapps.ptrac.client.exif.IApiMisc;
 import relapps.ptrac.client.exif.IWebApi;
 import relapps.ptrac.client.exif.XInvalidCredentials;
 import relapps.ptrac.client.gs.GsCredentials;
@@ -62,6 +63,14 @@ public class WebApi implements IWebApi {
     }
 
     @Override
+    public IApiMisc getMiscApi() {
+        if (_apiMisc == null) {
+            _apiMisc = new ApiMisc(_webClient);
+        }
+        return _apiMisc;
+    }
+
+    @Override
     public ApiProject getProjectApi() {
         if (_apiProject == null) {
             _apiProject = new ApiProject(_webClient);
@@ -96,6 +105,7 @@ public class WebApi implements IWebApi {
     private Exception XInvalidCredentials(String invalid_credentials) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    private ApiMisc _apiMisc;
     private ApiProject _apiProject;
     private ApiSession _apiSession;
     private ApiTimeRec _apiTimeRec;
