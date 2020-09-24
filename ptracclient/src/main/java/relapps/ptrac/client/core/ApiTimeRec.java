@@ -14,10 +14,9 @@
  */
 package relapps.ptrac.client.core;
 
-import relapps.ptrac.client.exif.IApiTimeRec;
 import java.time.LocalDate;
-import java.util.Arrays;
-import java.util.List;
+import relapps.ptrac.client.exif.IApiTimeRec;
+import relapps.ptrac.client.gs.GsDateRange;
 import relapps.ptrac.client.gs.GsDateRangeOids;
 import relapps.ptrac.client.gs.GsDateRangeProject;
 import relapps.ptrac.client.gs.GsTimeRecord;
@@ -31,6 +30,16 @@ public class ApiTimeRec implements IApiTimeRec {
 
     ApiTimeRec(WebClient webClient) {
         _webClient = webClient;
+    }
+
+    @Override
+    public GsTimeRecord[] getTimeRecords(LocalDate dateFrom, LocalDate dateTo)
+            throws Exception {
+        GsDateRange dateRange = new GsDateRange();
+        dateRange.setFrom(dateFrom.toString());
+        dateRange.setTo(dateTo.toString());
+        return _webClient.sendRequest("GetTimeRecordsDateRange",
+                dateRange, GsTimeRecord[].class);
     }
 
     /**
@@ -65,7 +74,7 @@ public class ApiTimeRec implements IApiTimeRec {
      * @throws Exception
      */
     @Override
-    public List<GsTimeRecord> getTimeRecordsProject(String oidProject,
+    public GsTimeRecord[] getTimeRecordsProject(String oidProject,
             LocalDate dateFrom, LocalDate dateTo)
             throws Exception {
         GsDateRangeProject inp = new GsDateRangeProject();
@@ -74,7 +83,7 @@ public class ApiTimeRec implements IApiTimeRec {
         inp.setProjectOid(oidProject);
         GsTimeRecord records[] = _webClient.sendRequest("GetTimeRecordsProject",
                 inp, GsTimeRecord[].class);
-        return Arrays.asList(records);
+        return records;
     }
     private final WebClient _webClient;
 }

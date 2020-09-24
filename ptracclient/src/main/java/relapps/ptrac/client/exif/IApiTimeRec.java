@@ -15,14 +15,25 @@
 package relapps.ptrac.client.exif;
 
 import java.time.LocalDate;
-import java.util.List;
 import relapps.ptrac.client.gs.GsTimeRecord;
 
 /**
+ * API functions related to time records.
  *
  * @author RMT
  */
 public interface IApiTimeRec {
+
+    /**
+     * Returns the time records in a time range.
+     *
+     * @param dateFrom The from date, use null to not specify a from date.
+     * @param dateTo The to date, use null to not specify a to date.
+     * @return A vector of the time records.
+     * @throws Exception
+     */
+    GsTimeRecord[] getTimeRecords(
+            LocalDate dateFrom, LocalDate dateTo) throws Exception;
 
     /**
      * Returns the time records for a list of groups in a time range.
@@ -46,7 +57,6 @@ public interface IApiTimeRec {
      * @return A vector of the time records.
      * @throws Exception
      */
-    List<GsTimeRecord> getTimeRecordsProject(String oidProject,
+    GsTimeRecord[] getTimeRecordsProject(String oidProject,
             LocalDate dateFrom, LocalDate dateTo) throws Exception;
-
 }
