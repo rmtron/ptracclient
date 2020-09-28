@@ -14,7 +14,6 @@
  */
 package relapps.ptrac.client.exif;
 
-import java.io.IOException;
 import java.net.MalformedURLException;
 import relapps.ptrac.client.core.WebApi;
 
@@ -35,12 +34,12 @@ public class FWebApi {
      * @param user The ptrac user.
      * @param passwd The user password.
      * @return The web API object.
-     * @throws MalformedURLException
-     * @throws IOException
-     * @throws XInvalidCredentials Thrown on invalid c
+     * @throws MalformedURLException Thrown on invalid URL.
+     * @throws XInvalidCredentials Thrown on invalid credentials.
+     * @throws XApiError Thrown on error in API.
      */
     public static IWebApi connect(String url, String user, String passwd)
-            throws MalformedURLException, IOException, XInvalidCredentials {
+            throws MalformedURLException, XInvalidCredentials, XApiError {
         return new WebApi(url, user, passwd);
     }
 }
