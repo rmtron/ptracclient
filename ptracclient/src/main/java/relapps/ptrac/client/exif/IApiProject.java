@@ -28,7 +28,7 @@ public interface IApiProject {
      * @param project The data for the project to create.
      * @return The project created.
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsProject createProject(GsProject project) throws XHttpError, XApiError;
 
@@ -38,7 +38,7 @@ public interface IApiProject {
      * @param projectName The project name.
      * @return The project found or null if not found.
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsProject getProjectByName(String projectName) throws XHttpError, XApiError;
 
@@ -47,7 +47,7 @@ public interface IApiProject {
      *
      * @return The list of projects.
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsProject[] getProjects() throws XHttpError, XApiError;
 }

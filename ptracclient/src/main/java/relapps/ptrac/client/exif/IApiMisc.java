@@ -28,7 +28,7 @@ public interface IApiMisc {
      *
      * @return The version information.
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsVersion getVersion() throws XHttpError, XApiError;
 }

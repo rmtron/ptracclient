@@ -26,7 +26,7 @@ public interface IApiSession {
      * Forget (dispose) the session.
      *
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     void forgetSession() throws XHttpError, XApiError;
 
@@ -35,7 +35,7 @@ public interface IApiSession {
      *
      * @return The session information.
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsSession getCurrentSession() throws XHttpError, XApiError;
 
@@ -45,7 +45,7 @@ public interface IApiSession {
      *
      * @return The time in seconds.
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     Integer getSessionDuration() throws XHttpError, XApiError;
 }

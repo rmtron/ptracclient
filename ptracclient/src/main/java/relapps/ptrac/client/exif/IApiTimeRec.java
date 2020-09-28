@@ -30,8 +30,8 @@ public interface IApiTimeRec {
      * @param dateFrom The from date, use null to not specify a from date.
      * @param dateTo The to date, use null to not specify a to date.
      * @return A vector of the time records.
-     * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsTimeRecord[] getTimeRecords(
             LocalDate dateFrom, LocalDate dateTo) throws XHttpError, XApiError;
@@ -43,8 +43,8 @@ public interface IApiTimeRec {
      * @param dateFrom The from date.
      * @param dateTo The to date.
      * @return A vector of the time records.
-     * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsTimeRecord[] getTimeRecordsGroups(String[] oidGroups, LocalDate dateFrom,
             LocalDate dateTo) throws XHttpError, XApiError;
@@ -58,7 +58,7 @@ public interface IApiTimeRec {
      * @param dateTo The to date.
      * @return A vector of the time records.
      * @throws XHttpError Error response from the backend.
-     * @throws XApiError Error in the Api sending/recieving request.
+     * @throws XApiError Error in the API sending/receiving request.
      */
     GsTimeRecord[] getTimeRecordsProject(String oidProject,
             LocalDate dateFrom, LocalDate dateTo) throws XHttpError, XApiError;
