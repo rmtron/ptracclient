@@ -15,6 +15,8 @@
 package relapps.ptrac.client.core;
 
 import relapps.ptrac.client.exif.IApiUser;
+import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsUser;
 import relapps.ptrac.client.gs.GsUserGroup;
 
@@ -30,19 +32,21 @@ public class ApiUser implements IApiUser {
     }
 
     @Override
-    public GsUser createUser(GsUser user) throws Exception {
+    public GsUser createUser(GsUser user) throws XHttpError, XApiError {
         return _webClient.sendRequest("CreateUser",
                 GsUser.class);
     }
 
     @Override
-    public GsUserGroup createUserGroup(GsUserGroup user) throws Exception {
+    public GsUserGroup createUserGroup(GsUserGroup user)
+            throws XHttpError, XApiError {
         return _webClient.sendRequest("CreateUserGroup",
                 GsUserGroup.class);
     }
 
     @Override
-    public GsUserGroup getUserGroupByName(String groupName) throws Exception {
+    public GsUserGroup getUserGroupByName(String groupName)
+            throws XHttpError, XApiError {
         GsUserGroup groups[] = getUserGroups();
         // TODO implement a get group by name as a web service.
         for (GsUserGroup grp : groups) {
@@ -54,24 +58,24 @@ public class ApiUser implements IApiUser {
     }
 
     @Override
-    public GsUserGroup[] getUserGroups() throws Exception {
+    public GsUserGroup[] getUserGroups() throws XHttpError, XApiError {
         return _webClient.sendRequest("GetUserGroups",
                 GsUserGroup[].class);
     }
 
     @Override
-    public GsUser[] getUsers() throws Exception {
+    public GsUser[] getUsers() throws XHttpError, XApiError {
         return _webClient.sendRequest("GetUsers",
                 GsUser[].class);
     }
 
     @Override
-    public void saveUser(GsUser user) throws Exception {
+    public void saveUser(GsUser user) throws XHttpError, XApiError {
         _webClient.sendRequest("SaveUser", user);
     }
 
     @Override
-    public void saveUserGroup(GsUserGroup group) throws Exception {
+    public void saveUserGroup(GsUserGroup group) throws XHttpError, XApiError {
         _webClient.sendRequest("SaveUserGroup", group);
     }
     private final WebClient _webClient;

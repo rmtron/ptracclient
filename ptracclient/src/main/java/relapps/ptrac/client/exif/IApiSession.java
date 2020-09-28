@@ -25,24 +25,27 @@ public interface IApiSession {
     /**
      * Forget (dispose) the session.
      *
-     * @throws Exception
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the Api sending/recieving request.
      */
-    void forgetSession() throws Exception;
+    void forgetSession() throws XHttpError, XApiError;
 
     /**
      * Get information about the current session.
      *
      * @return The session information.
-     * @throws Exception
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the Api sending/recieving request.
      */
-    GsSession getCurrentSession() throws Exception;
+    GsSession getCurrentSession() throws XHttpError, XApiError;
 
     /**
      * Returns the maximum inactive session duration in seconds before closing
      * session.
      *
      * @return The time in seconds.
-     * @throws Exception
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the Api sending/recieving request.
      */
-    Integer getSessionDuration() throws Exception;
+    Integer getSessionDuration() throws XHttpError, XApiError;
 }

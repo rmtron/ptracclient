@@ -27,7 +27,8 @@ public interface IApiMisc {
      * Returns the ptrac version information.
      *
      * @return The version information.
-     * @throws Exception Thrown on error.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the Api sending/recieving request.
      */
-    GsVersion getVersion() throws Exception;
+    GsVersion getVersion() throws XHttpError, XApiError;
 }

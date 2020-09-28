@@ -17,6 +17,7 @@ package relapps.ptrac.client.core;
 import java.net.MalformedURLException;
 import relapps.ptrac.client.exif.IApiMisc;
 import relapps.ptrac.client.exif.IWebApi;
+import relapps.ptrac.client.exif.XApiError;
 import relapps.ptrac.client.exif.XInvalidCredentials;
 import relapps.ptrac.client.gs.GsCredentials;
 import relapps.ptrac.client.gs.GsSession;
@@ -36,10 +37,10 @@ public class WebApi implements IWebApi {
      * @param passwd The password.
      * @throws MalformedURLException Thrown on invalid URL.
      * @throws XInvalidCredentials Thrown on invalid credentials.
-     * @throws Exception Thrown on error.
+     * @throws XApiError Thrown on error.
      */
     public WebApi(String rootURL, String user, String passwd)
-            throws MalformedURLException, XInvalidCredentials, Exception {
+            throws MalformedURLException, XInvalidCredentials, XApiError {
         _webClient = new WebClient(rootURL);
 
         // Authenticate by creating a session.
@@ -58,7 +59,7 @@ public class WebApi implements IWebApi {
             // Assign the autorization token (session).
             _webClient.setAutorization(session.getToken());
         } catch (Exception ex) {
-            throw ex;
+            throw new XApiError("Initialization failed", ex);
         }
     }
 

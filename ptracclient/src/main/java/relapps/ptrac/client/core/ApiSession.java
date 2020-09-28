@@ -15,6 +15,8 @@
 package relapps.ptrac.client.core;
 
 import relapps.ptrac.client.exif.IApiSession;
+import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsSession;
 
 /**
@@ -23,27 +25,23 @@ import relapps.ptrac.client.gs.GsSession;
  * @author RMT
  */
 public class ApiSession implements IApiSession {
+
     ApiSession(WebClient webClient) {
         _webClient = webClient;
     }
 
-    /**
-     * Forget (dispose) the session.
-     *
-     * @throws Exception
-     */
     @Override
-    public void forgetSession() throws Exception {
+    public void forgetSession() throws XHttpError, XApiError {
         _webClient.sendRequest("ForgetSession");
     }
 
     @Override
-    public GsSession getCurrentSession() throws Exception {
+    public GsSession getCurrentSession() throws XHttpError, XApiError {
         return _webClient.sendRequest("GetSession", GsSession.class);
     }
 
     @Override
-    public Integer getSessionDuration() throws Exception {
+    public Integer getSessionDuration() throws XHttpError, XApiError {
         return _webClient.sendRequest("GetSessionDuration", Integer.class);
     }
 

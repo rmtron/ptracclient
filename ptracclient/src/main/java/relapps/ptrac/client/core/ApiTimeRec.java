@@ -16,6 +16,8 @@ package relapps.ptrac.client.core;
 
 import java.time.LocalDate;
 import relapps.ptrac.client.exif.IApiTimeRec;
+import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsDateRange;
 import relapps.ptrac.client.gs.GsDateRangeOids;
 import relapps.ptrac.client.gs.GsDateRangeProject;
@@ -34,7 +36,7 @@ public class ApiTimeRec implements IApiTimeRec {
 
     @Override
     public GsTimeRecord[] getTimeRecords(LocalDate dateFrom, LocalDate dateTo)
-            throws Exception {
+            throws XHttpError, XApiError {
         GsDateRange dateRange = new GsDateRange();
         dateRange.setFrom(dateFrom.toString());
         dateRange.setTo(dateTo.toString());
@@ -42,19 +44,10 @@ public class ApiTimeRec implements IApiTimeRec {
                 dateRange, GsTimeRecord[].class);
     }
 
-    /**
-     * Returns the time records for a list of groups in a time range.
-     *
-     * @param oidGroups A vector of the group OIDs.
-     * @param dateFrom The from date.
-     * @param dateTo The to date.
-     * @return A vector of the time records.
-     * @throws Exception
-     */
     @Override
     public GsTimeRecord[] getTimeRecordsGroups(String[] oidGroups,
             LocalDate dateFrom, LocalDate dateTo)
-            throws Exception {
+            throws XHttpError, XApiError {
         GsDateRangeOids inp = new GsDateRangeOids();
         inp.setFrom(dateFrom.toString());
         inp.setTo(dateTo.toString());
@@ -63,20 +56,10 @@ public class ApiTimeRec implements IApiTimeRec {
                 inp, GsTimeRecord[].class);
     }
 
-    /**
-     * Returns the time records for a project in a time range. Note: Returns
-     * records for all days even when time is 0.
-     *
-     * @param oidProject The project OID.
-     * @param dateFrom The from date.
-     * @param dateTo The to date.
-     * @return A vector of the time records.
-     * @throws Exception
-     */
     @Override
     public GsTimeRecord[] getTimeRecordsProject(String oidProject,
             LocalDate dateFrom, LocalDate dateTo)
-            throws Exception {
+            throws XHttpError, XApiError {
         GsDateRangeProject inp = new GsDateRangeProject();
         inp.setFrom(dateFrom.toString());
         inp.setTo(dateTo.toString());

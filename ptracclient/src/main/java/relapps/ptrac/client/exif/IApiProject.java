@@ -27,25 +27,27 @@ public interface IApiProject {
      *
      * @param project The data for the project to create.
      * @return The project created.
-     * @throws Exception
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the Api sending/recieving request.
      */
-    GsProject createProject(GsProject project) throws Exception;
+    GsProject createProject(GsProject project) throws XHttpError, XApiError;
 
     /**
      * Lookup a project.
      *
      * @param projectName The project name.
      * @return The project found or null if not found.
-     * @throws Exception
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the Api sending/recieving request.
      */
-    GsProject getProjectByName(String projectName) throws Exception;
+    GsProject getProjectByName(String projectName) throws XHttpError, XApiError;
 
     /**
      * Get the list of the defined projects.
      *
      * @return The list of projects.
-     * @throws Exception
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the Api sending/recieving request.
      */
-    GsProject[] getProjects() throws Exception;
-
+    GsProject[] getProjects() throws XHttpError, XApiError;
 }

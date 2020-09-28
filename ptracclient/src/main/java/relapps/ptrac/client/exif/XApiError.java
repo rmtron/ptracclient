@@ -14,33 +14,38 @@
  */
 package relapps.ptrac.client.exif;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import relapps.ptrac.client.core.WebApi;
-
 /**
- * WebApi factory.
+ * Error thrown on error in the Api.
  *
  * @author RMT
  */
-public class FWebApi {
+@SuppressWarnings("serial")
+public class XApiError extends Exception {
 
-    private FWebApi() {
+    /**
+     * Creates a new instance of <code>XApiError</code> without detail message.
+     */
+    public XApiError() {
     }
 
     /**
-     * Connect to the ptrac service and returns a new instance of IWebApi.
+     * Constructs an instance of <code>XApiError</code> with the specified
+     * detail message.
      *
-     * @param url The ptrac URL.
-     * @param user The ptrac user.
-     * @param passwd The user password.
-     * @return The web API object.
-     * @throws MalformedURLException
-     * @throws IOException
-     * @throws XInvalidCredentials Thrown on invalid c
+     * @param msg the detail message.
      */
-    public static IWebApi connect(String url, String user, String passwd)
-            throws MalformedURLException, IOException, XInvalidCredentials {
-        return new WebApi(url, user, passwd);
+    public XApiError(String msg) {
+        super(msg);
+    }
+
+    /**
+     * Constructs an instance of <code>XApiError</code> with the specified
+     * detail message.
+     *
+     * @param msg the detail message.
+     * @param cause the cause.
+     */
+    public XApiError(String msg, Throwable cause) {
+        super(msg);
     }
 }

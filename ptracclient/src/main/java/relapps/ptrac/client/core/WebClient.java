@@ -18,10 +18,12 @@ package relapps.ptrac.client.core;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import relapps.ptrac.client.exif.XApiError;
 import relapps.ptrac.client.exif.XHttpError;
 
 /**
@@ -61,11 +63,9 @@ public class WebClient {
      * @param url The relative URL for the service (relative to the root given
      * in the constructor).
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws IOException Thrown IO error.
-     * @throws Exception Thrown on error.
+     * @throws XApiError Thrown on error in senfing sending/receiving request.
      */
-    void sendRequest(String url)
-            throws XHttpError, IOException, Exception {
+    void sendRequest(String url) throws XHttpError, XApiError {
         sendRequest(url, (Class<?>) null);
     }
 
@@ -78,11 +78,10 @@ public class WebClient {
      * @param outputClass The output class.
      * @return The object received from the server.
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws IOException Thrown IO error.
-     * @throws Exception Thrown on error.
+     * @throws XApiError Thrown on error in senfing sending/receiving request.
      */
     <O> O sendRequest(String url, Class<O> outputClass)
-            throws XHttpError, IOException, Exception {
+            throws XHttpError, XApiError {
         return sendRequest(url, (Void) null, outputClass);
     }
 
@@ -94,11 +93,10 @@ public class WebClient {
      * @param url The relative URL for the service (relative to the root given
      * in the constructor).
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws IOException Thrown IO error.
-     * @throws Exception Thrown on error.
+     * @throws XApiError Thrown on error in senfing sending/receiving request.
      */
     <I> void sendRequest(String url, I input)
-            throws XHttpError, IOException, Exception {
+            throws XHttpError, XApiError {
         sendRequest(url, input, Void.class);
     }
 
@@ -113,17 +111,21 @@ public class WebClient {
      * @param outputClass The output class.
      * @return The object received from the server.
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws IOException Thrown IO error.
-     * @throws Exception Thrown on error.
+     * @throws XApiError Thrown on error in senfing sending/receiving request.
      */
-    @SuppressWarnings({"unchecked", "UseSpecificCatch"})
     <I, O> O sendRequest(String url, I input, Class<O> outputClass)
-            throws XHttpError, IOException, Exception {
+            throws XHttpError, XApiError {
         Gson gson = new Gson();
         String inputJson = gson.toJson(input);
 
-        URL servletURL = getServiceUrl(url);
+        URL servletURL;
+        try {
+            servletURL = getServiceUrl(url);
+        } catch (MalformedURLException ex) {
+            throw new XApiError("Error in URI", ex);
+        }
         HttpRequest request;
+        try {
         if (_authToken != null) {
             request = HttpRequest.newBuilder()
                     .uri(servletURL.toURI())
@@ -135,11 +137,19 @@ public class WebClient {
                     .uri(servletURL.toURI())
                     .POST(HttpRequest.BodyPublishers.ofString(inputJson))
                     .build();
+            }
+        } catch (URISyntaxException ex) {
+            throw new XApiError("Error in request.", ex);
         }
 
         HttpClient httpClient = HttpClient.newBuilder().build();
-        HttpResponse<String> response
-                = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<String> response;
+        try {
+            response = httpClient.send(request, HttpResponse.BodyHandlers.
+                    ofString());
+        } catch (IOException | InterruptedException ex) {
+            throw new XApiError("Error in sending request.", ex);
+        }
         int statusCode = response.statusCode();
         if (statusCode != 200) {
             throw new XHttpError("Error status code returned", statusCode);
@@ -158,7 +168,6 @@ public class WebClient {
             String vclass = outputClass.getName();
             isVoid = vclass.equals("java.lang.Void");
         }
-        Void v;
         if (outputClass != null && !isVoid) {
             output = gson.fromJson(outputJson, outputClass);
         } else {
@@ -176,7 +185,7 @@ public class WebClient {
         _authToken = authToken;
     }
 
-    private URL getServiceUrl(String service) throws Exception {
+    private URL getServiceUrl(String service) throws MalformedURLException {
         URL serviceURL = new URL(_rootURL, service);
         return serviceURL;
     }

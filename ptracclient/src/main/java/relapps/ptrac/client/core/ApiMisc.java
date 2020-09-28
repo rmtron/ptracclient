@@ -14,8 +14,9 @@
  */
 package relapps.ptrac.client.core;
 
-import java.io.IOException;
 import relapps.ptrac.client.exif.IApiMisc;
+import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsVersion;
 
 /**
@@ -28,7 +29,7 @@ public class ApiMisc implements IApiMisc {
     }
 
     @Override
-    public GsVersion getVersion() throws IOException, Exception {
+    public GsVersion getVersion() throws XHttpError, XApiError {
         GsVersion project = _webClient.
                 sendRequest("GetVersion", GsVersion.class);
         return project;

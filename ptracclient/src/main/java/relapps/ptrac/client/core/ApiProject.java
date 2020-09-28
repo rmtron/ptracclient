@@ -15,6 +15,8 @@
 package relapps.ptrac.client.core;
 
 import relapps.ptrac.client.exif.IApiProject;
+import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsProject;
 
 /**
@@ -23,46 +25,29 @@ import relapps.ptrac.client.gs.GsProject;
  * @author RMT
  */
 public class ApiProject implements IApiProject {
+
     ApiProject(WebClient webClient) {
         _webClient = webClient;
     }
 
-    /**
-     * Create a project.
-     *
-     * @param project The data for the project to create.
-     * @return The project created.
-     * @throws Exception
-     */
     @Override
-    public GsProject createProject(GsProject project) throws Exception {
+    public GsProject createProject(GsProject project)
+            throws XHttpError, XApiError {
         GsProject newProject = _webClient.
                 sendRequest("CreateProject", project, GsProject.class);
         return newProject;
     }
 
-    /**
-     * Lookup a project.
-     *
-     * @param projectName The project name.
-     * @return The project found or null if not found.
-     * @throws Exception
-     */
     @Override
-    public GsProject getProjectByName(String projectName) throws Exception {
+    public GsProject getProjectByName(String projectName)
+            throws XHttpError, XApiError {
         GsProject project = _webClient.
                 sendRequest("GetProjectByName", projectName, GsProject.class);
         return project;
     }
 
-    /**
-     * Get the list of the defined projects.
-     *
-     * @return The list of projects.
-     * @throws Exception
-     */
     @Override
-    public GsProject[] getProjects() throws Exception {
+    public GsProject[] getProjects() throws XHttpError, XApiError {
         return _webClient.sendRequest("GetProjects",
                 GsProject[].class);
     }
