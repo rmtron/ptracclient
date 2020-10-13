@@ -32,9 +32,12 @@ public interface IApiTimeRec {
      * @return A vector of the time records.
      * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     GsTimeRecord[] getTimeRecords(
-            LocalDate dateFrom, LocalDate dateTo) throws XHttpError, XApiError;
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Returns the time records for a list of groups in a time range.
@@ -45,9 +48,11 @@ public interface IApiTimeRec {
      * @return A vector of the time records.
      * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     GsTimeRecord[] getTimeRecordsGroups(String[] oidGroups, LocalDate dateFrom,
-            LocalDate dateTo) throws XHttpError, XApiError;
+            LocalDate dateTo) throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Returns the time records for a project in a time range. Note: Returns
@@ -57,9 +62,12 @@ public interface IApiTimeRec {
      * @param dateFrom The from date.
      * @param dateTo The to date.
      * @return A vector of the time records.
-     * @throws XHttpError Error response from the backend.
+     * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     GsTimeRecord[] getTimeRecordsProject(String oidProject,
-            LocalDate dateFrom, LocalDate dateTo) throws XHttpError, XApiError;
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError;
 }

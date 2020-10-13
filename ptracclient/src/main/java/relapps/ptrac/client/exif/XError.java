@@ -3,9 +3,9 @@
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *     http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  *  Unless required by applicable law or agreed to in writing, software
  *  distributed under the License is distributed on an "AS IS" BASIS,
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,37 +15,37 @@
 package relapps.ptrac.client.exif;
 
 /**
- * Error thrown on error in the API.
+ * Thrown on errors in the web service client.
  *
  * @author RMT
  */
 @SuppressWarnings("serial")
-public class XApiError extends Exception {
+public class XError extends Exception {
 
     /**
-     * Creates a new instance of <code>XApiError</code> without detail message.
+     * Creates a new instance of <code>XError</code> without detail message.
      */
-    public XApiError() {
+    public XError() {
     }
 
     /**
-     * Constructs an instance of <code>XApiError</code> with the specified
-     * detail message.
+     * Constructs an instance of <code>XError</code> with the specified * detail
+     * message.
      *
      * @param msg the detail message.
      */
-    public XApiError(String msg) {
+    public XError(String msg) {
         super(msg);
     }
 
     /**
-     * Constructs an instance of <code>XApiError</code> with the specified
-     * detail message.
+     * Constructs an instance of <code>XError</code> with the specified * detail
+     * message.
      *
      * @param msg the detail message.
-     * @param cause the cause.
+     * @param cause The cause of the exception.
      */
-    public XApiError(String msg, Throwable cause) {
-        super(msg);
+    public XError(String msg, Throwable cause) {
+        super(msg, cause);
     }
 }

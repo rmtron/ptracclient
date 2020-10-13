@@ -14,8 +14,11 @@
  */
 package relapps.ptrac.client.core;
 
+import relapps.ptrac.client.exif.EHttpMethod;
 import relapps.ptrac.client.exif.IApiSession;
 import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XAppError;
+import relapps.ptrac.client.exif.XError;
 import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsSession;
 
@@ -31,19 +34,27 @@ public class ApiSession implements IApiSession {
     }
 
     @Override
-    public void forgetSession() throws XHttpError, XApiError {
-        _webClient.sendRequest("ForgetSession");
+    public void forgetSession()
+            throws XHttpError, XApiError, XError, XAppError {
+        _webClient.sendRequest(getService("forgetSession"), EHttpMethod.POST);
     }
 
     @Override
-    public GsSession getCurrentSession() throws XHttpError, XApiError {
-        return _webClient.sendRequest("GetSession", GsSession.class);
+    public GsSession getCurrentSession()
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("getSession"),
+                EHttpMethod.POST, GsSession.class);
     }
 
     @Override
-    public Integer getSessionDuration() throws XHttpError, XApiError {
-        return _webClient.sendRequest("GetSessionDuration", Integer.class);
+    public Integer getSessionDuration()
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("getSessionDuration"),
+                EHttpMethod.POST, Integer.class);
     }
-
+    private String getService(String name) {
+        return _prefix + name;
+    }
+    private final String _prefix = "/session";
     private final WebClient _webClient;
 }

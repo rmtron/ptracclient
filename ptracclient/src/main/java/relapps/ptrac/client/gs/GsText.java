@@ -12,25 +12,28 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package relapps.ptrac.client.exif;
-
-import relapps.ptrac.client.gs.GsVersion;
+package relapps.ptrac.client.gs;
 
 /**
- * Miscellaneous operations.
+ * Serialization for text.
  *
  * @author RMT
  */
-public interface IApiMisc {
+public class GsText {
 
-    /**
-     * Returns the ptrac version information.
-     *
-     * @return The version information.
-     * @throws XHttpError Error response from the back-end.
-     * @throws XApiError Error in the API sending/receiving request.
-     * @throws XAppError Thrown on error in the back-end application.
-     * @throws XError Thrown on error.
-     */
-    GsVersion getVersion() throws XHttpError, XApiError, XError, XAppError;
+    public GsText() {
+    }
+
+    public GsText(String text) {
+        this.text = text;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+    private String text;
 }

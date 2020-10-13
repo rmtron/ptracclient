@@ -23,8 +23,12 @@ import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import relapps.ptrac.client.exif.EHttpMethod;
 import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XAppError;
+import relapps.ptrac.client.exif.XError;
 import relapps.ptrac.client.exif.XHttpError;
+import relapps.ptrac.client.gs.GsError;
 
 /**
  * A WEB client for sending and receiving JSON serialized object from server.
@@ -62,11 +66,15 @@ public class WebClient {
      *
      * @param url The relative URL for the service (relative to the root given
      * in the constructor).
+     * @param method The HTTP method to use.
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws XApiError Thrown on error in senfing sending/receiving request.
+     * @throws XApiError Thrown on error in sending/receiving request.
+     * @throws XAppError Thrown on error from application.
+     * @throws XError Thrown on error.
      */
-    void sendRequest(String url) throws XHttpError, XApiError {
-        sendRequest(url, (Class<?>) null);
+    void sendRequest(String url, EHttpMethod method)
+            throws XHttpError, XApiError, XError, XAppError {
+        sendRequest(url, method, (Class<?>) null);
     }
 
     /**
@@ -75,29 +83,35 @@ public class WebClient {
      * @param <O> The output object type.
      * @param url The relative URL for the service (relative to the root given
      * in the constructor).
+     * @param method The HTTP method to use.
      * @param outputClass The output class.
      * @return The object received from the server.
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws XApiError Thrown on error in senfing sending/receiving request.
+     * @throws XApiError Thrown on error in sending/receiving request.
+     * @throws XAppError Thrown on error from application.
+     * @throws XError Thrown on error.
      */
-    <O> O sendRequest(String url, Class<O> outputClass)
-            throws XHttpError, XApiError {
-        return sendRequest(url, (Void) null, outputClass);
+    <O> O sendRequest(String url, EHttpMethod method, Class<O> outputClass)
+            throws XHttpError, XApiError, XError, XAppError {
+        return sendRequest(url, method, (Void) null, outputClass);
     }
 
     /**
      * Make a request to the server.
      *
      * @param <I> The input object type.
-     * @param input The input object (send to server).
      * @param url The relative URL for the service (relative to the root given
      * in the constructor).
+     * @param input The input object (send to server).
+     * @param method The HTTP method to use.
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws XApiError Thrown on error in senfing sending/receiving request.
+     * @throws XApiError Thrown on error in sending/receiving request.
+     * @throws XAppError Thrown on error from application.
+     * @throws XError Thrown on error.
      */
-    <I> void sendRequest(String url, I input)
-            throws XHttpError, XApiError {
-        sendRequest(url, input, Void.class);
+    <I> void sendRequest(String url, EHttpMethod method, I input)
+            throws XHttpError, XApiError, XError, XAppError {
+        sendRequest(url, method, input, Void.class);
     }
 
     /**
@@ -105,73 +119,86 @@ public class WebClient {
      *
      * @param <I> The input object type.
      * @param <O> The output object type.
-     * @param input The input object (send to server).
      * @param url The relative URL for the service (relative to the root given
      * in the constructor).
+     * @param method The HTTP method to use.
+     * @param input The input object (send to server).
      * @param outputClass The output class.
      * @return The object received from the server.
      * @throws XHttpError Thrown on a HTTP error.
-     * @throws XApiError Thrown on error in senfing sending/receiving request.
+     * @throws XApiError Thrown on error in sending/receiving request.
+     * @throws XAppError Thrown on error from application.
+     * @throws XError Thrown on error.
      */
-    <I, O> O sendRequest(String url, I input, Class<O> outputClass)
-            throws XHttpError, XApiError {
+    <I, O> O sendRequest(String url, EHttpMethod method,
+            I input, Class<O> outputClass)
+            throws XHttpError, XApiError, XError, XAppError {
         Gson gson = new Gson();
         String inputJson = gson.toJson(input);
 
-        URL servletURL;
+        HttpRequest.Builder builder = HttpRequest.newBuilder();
+        URL serviceURL;
         try {
-            servletURL = getServiceUrl(url);
-        } catch (MalformedURLException ex) {
-            throw new XApiError("Error in URI", ex);
+            serviceURL = getServiceUrl(url);
+            builder = builder.uri(serviceURL.toURI());
+        } catch (MalformedURLException | URISyntaxException ex) {
+            throw new XError("Service URI error", ex);
         }
-        HttpRequest request;
-        try {
+        switch (method) {
+            case DELETE:
+                builder = builder.DELETE();
+                break;
+            case GET:
+                builder = builder.GET();
+                break;
+            case POST:
+                builder = builder.POST(HttpRequest.BodyPublishers.ofString(
+                        inputJson));
+                break;
+            case PUT:
+                builder = builder.PUT(HttpRequest.BodyPublishers.ofString(
+                        inputJson));
+                break;
+        }
         if (_authToken != null) {
-            request = HttpRequest.newBuilder()
-                    .uri(servletURL.toURI())
-                    .POST(HttpRequest.BodyPublishers.ofString(inputJson))
-                    .setHeader("Authorization", _authToken)
-                    .build();
-        } else {
-            request = HttpRequest.newBuilder()
-                    .uri(servletURL.toURI())
-                    .POST(HttpRequest.BodyPublishers.ofString(inputJson))
-                    .build();
-            }
-        } catch (URISyntaxException ex) {
-            throw new XApiError("Error in request.", ex);
+            builder = builder.setHeader("Authorization", _authToken);
         }
+        builder = builder.setHeader("Content-Type", "application/json");
 
-        HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpRequest request = builder.build();
+
         HttpResponse<String> response;
         try {
-            response = httpClient.send(request, HttpResponse.BodyHandlers.
-                    ofString());
+            response = _httpClient.send(request,
+                    HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException ex) {
             throw new XApiError("Error in sending request.", ex);
         }
         int statusCode = response.statusCode();
-        if (statusCode != 200) {
-            throw new XHttpError("Error status code returned", statusCode);
-        }
-        String body = response.body();
-        GsWrapper wrapper = gson.fromJson(body, GsWrapper.class);
-        if (wrapper.hasException()) {
-            throw new XHttpError(wrapper.getExMessage(), statusCode);
-        }
-        String outputJson = wrapper.getData();
-        O output;
 
-        boolean isVoid = false;
-        if (outputClass != null) {
-            // Do not read output if void type.
-            String vclass = outputClass.getName();
-            isVoid = vclass.equals("java.lang.Void");
-        }
-        if (outputClass != null && !isVoid) {
-            output = gson.fromJson(outputJson, outputClass);
-        } else {
-            output = null;
+        O output;
+        switch (statusCode) {
+            case 200: {
+                String body = response.body();
+                output = gson.fromJson(body, outputClass);
+                break;
+            }
+            case 400: {
+                String body = response.body();
+                GsError error = gson.fromJson(body, GsError.class);
+                StringBuilder msg = new StringBuilder();
+                msg.append("Error accessing: ");
+                msg.append(method.toString());
+                msg.append(" ");
+                msg.append(serviceURL);
+                throw new XAppError(error, msg.toString());
+            }
+            default:
+                String body = response.body();
+                throw new XHttpError("Error conecting to server: "
+                        + serviceURL
+                        + "\n" + body,
+                        statusCode);
         }
         return output;
     }
@@ -190,5 +217,6 @@ public class WebClient {
         return serviceURL;
     }
     private String _authToken;
+    private final HttpClient _httpClient = HttpClient.newBuilder().build();
     private final URL _rootURL;
 }

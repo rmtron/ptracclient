@@ -48,8 +48,8 @@ public class GsUser extends GsObject {
         return displayName;
     }
 
-    public String getEMail() {
-        return EMail;
+    public String getEmail() {
+        return email;
     }
 
     public String getFirstName() {
@@ -113,8 +113,8 @@ public class GsUser extends GsObject {
         this.displayName = displayName;
     }
 
-    public void setEMail(String EMail) {
-        this.EMail = EMail;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setFirstName(String firstName) {
@@ -154,13 +154,13 @@ public class GsUser extends GsObject {
         this.userId = userId;
     }
 
-    private String EMail;
     private int accesses;
     private String calendarOid;
     private String dateCreation;
     private String dateLastAccess;
     private String dateModified;
     private String displayName;
+    private String email;
     private String firstName;
     private String lastName;
     private boolean permAdminProject = false;

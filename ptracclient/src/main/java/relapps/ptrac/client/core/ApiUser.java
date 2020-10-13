@@ -14,8 +14,11 @@
  */
 package relapps.ptrac.client.core;
 
+import relapps.ptrac.client.exif.EHttpMethod;
 import relapps.ptrac.client.exif.IApiUser;
 import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XAppError;
+import relapps.ptrac.client.exif.XError;
 import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsUser;
 import relapps.ptrac.client.gs.GsUserGroup;
@@ -32,21 +35,22 @@ public class ApiUser implements IApiUser {
     }
 
     @Override
-    public GsUser createUser(GsUser user) throws XHttpError, XApiError {
-        return _webClient.sendRequest("CreateUser",
-                GsUser.class);
+    public GsUser createUser(GsUser user)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("createUser"),
+                EHttpMethod.POST, GsUser.class);
     }
 
     @Override
     public GsUserGroup createUserGroup(GsUserGroup user)
-            throws XHttpError, XApiError {
-        return _webClient.sendRequest("CreateUserGroup",
-                GsUserGroup.class);
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("createUserGroup"),
+                EHttpMethod.POST, GsUserGroup.class);
     }
 
     @Override
     public GsUserGroup getUserGroupByName(String groupName)
-            throws XHttpError, XApiError {
+            throws XHttpError, XApiError, XError, XAppError {
         GsUserGroup groups[] = getUserGroups();
         // TODO implement a get group by name as a web service.
         for (GsUserGroup grp : groups) {
@@ -58,25 +62,35 @@ public class ApiUser implements IApiUser {
     }
 
     @Override
-    public GsUserGroup[] getUserGroups() throws XHttpError, XApiError {
-        return _webClient.sendRequest("GetUserGroups",
-                GsUserGroup[].class);
+    public GsUserGroup[] getUserGroups()
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("getUserGroups"),
+                EHttpMethod.POST, GsUserGroup[].class);
     }
 
     @Override
-    public GsUser[] getUsers() throws XHttpError, XApiError {
-        return _webClient.sendRequest("GetUsers",
-                GsUser[].class);
+    public GsUser[] getUsers() throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("getUsers"),
+                EHttpMethod.POST, GsUser[].class);
     }
 
     @Override
-    public void saveUser(GsUser user) throws XHttpError, XApiError {
-        _webClient.sendRequest("SaveUser", user);
+    public void saveUser(GsUser user)
+            throws XHttpError, XApiError, XError, XAppError {
+        _webClient.sendRequest(getService("saveUser"),
+                EHttpMethod.POST, user);
     }
 
     @Override
-    public void saveUserGroup(GsUserGroup group) throws XHttpError, XApiError {
-        _webClient.sendRequest("SaveUserGroup", group);
+    public void saveUserGroup(GsUserGroup group)
+            throws XHttpError, XApiError, XError, XAppError {
+        _webClient.sendRequest(getService("saveUserGroup"),
+                EHttpMethod.POST, group);
     }
+
+    private String getService(String name) {
+        return _prefix + name;
+    }
+    private final String _prefix = "/user";
     private final WebClient _webClient;
 }

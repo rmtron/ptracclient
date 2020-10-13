@@ -15,9 +15,13 @@
 package relapps.ptrac.client.core;
 
 import java.net.MalformedURLException;
+import relapps.ptrac.client.exif.EHttpMethod;
 import relapps.ptrac.client.exif.IApiMisc;
 import relapps.ptrac.client.exif.IWebApi;
 import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XAppError;
+import relapps.ptrac.client.exif.XError;
+import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.exif.XInvalidCredentials;
 import relapps.ptrac.client.gs.GsCredentials;
 import relapps.ptrac.client.gs.GsSession;
@@ -38,9 +42,13 @@ public class WebApi implements IWebApi {
      * @throws MalformedURLException Thrown on invalid URL.
      * @throws XInvalidCredentials Thrown on invalid credentials.
      * @throws XApiError Thrown on error.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     * @throws XHttpError Error response from the backend.
      */
     public WebApi(String rootURL, String user, String passwd)
-            throws MalformedURLException, XInvalidCredentials, XApiError {
+            throws MalformedURLException, XInvalidCredentials, XApiError,
+            XHttpError, XError, XAppError {
         _webClient = new WebClient(rootURL);
 
         // Authenticate by creating a session.
@@ -48,19 +56,17 @@ public class WebApi implements IWebApi {
         GsCredentials cred = new GsCredentials();
         cred.setUser(user);
         cred.setPassword(passwd);
-        try {
-            // Send a create session request.
-            GsSession session = _webClient.sendRequest("CreateSession",
-                    cred, GsSession.class);
-            if (session == null) {
-                throw XInvalidCredentials("Invalid credentials.");
-            }
 
-            // Assign the autorization token (session).
-            _webClient.setAutorization(session.getToken());
-        } catch (Exception ex) {
-            throw new XApiError("Initialization failed", ex);
+        // Send a create session request.
+        GsSession session
+                = _webClient.sendRequest("session/createSession",
+                        EHttpMethod.POST, cred, GsSession.class);
+        if (session == null) {
+            throw new XInvalidCredentials("Invalid credentials.");
         }
+
+        // Assign the autorization token (session).
+        _webClient.setAutorization(session.getToken());
     }
 
     @Override
@@ -103,9 +109,6 @@ public class WebApi implements IWebApi {
         return _apiUser;
     }
 
-    private Exception XInvalidCredentials(String invalid_credentials) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
     private ApiMisc _apiMisc;
     private ApiProject _apiProject;
     private ApiSession _apiSession;

@@ -15,8 +15,11 @@
 package relapps.ptrac.client.core;
 
 import java.time.LocalDate;
+import relapps.ptrac.client.exif.EHttpMethod;
 import relapps.ptrac.client.exif.IApiTimeRec;
 import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XAppError;
+import relapps.ptrac.client.exif.XError;
 import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsDateRange;
 import relapps.ptrac.client.gs.GsDateRangeOids;
@@ -36,37 +39,43 @@ public class ApiTimeRec implements IApiTimeRec {
 
     @Override
     public GsTimeRecord[] getTimeRecords(LocalDate dateFrom, LocalDate dateTo)
-            throws XHttpError, XApiError {
+            throws XHttpError, XApiError, XError, XAppError {
         GsDateRange dateRange = new GsDateRange();
         dateRange.setFrom(dateFrom.toString());
         dateRange.setTo(dateTo.toString());
-        return _webClient.sendRequest("GetTimeRecordsDateRange",
-                dateRange, GsTimeRecord[].class);
+        return _webClient.sendRequest(getService("getTimeRecordsDateRange"),
+                EHttpMethod.POST, dateRange, GsTimeRecord[].class);
     }
 
     @Override
     public GsTimeRecord[] getTimeRecordsGroups(String[] oidGroups,
             LocalDate dateFrom, LocalDate dateTo)
-            throws XHttpError, XApiError {
+            throws XHttpError, XApiError, XError, XAppError {
         GsDateRangeOids inp = new GsDateRangeOids();
         inp.setFrom(dateFrom.toString());
         inp.setTo(dateTo.toString());
         inp.setOids(oidGroups);
-        return _webClient.sendRequest("GetTimeRecordsGroups",
-                inp, GsTimeRecord[].class);
+        return _webClient.sendRequest(getService("GetTimeRecordsGroups"),
+                EHttpMethod.POST, inp, GsTimeRecord[].class);
     }
 
     @Override
     public GsTimeRecord[] getTimeRecordsProject(String oidProject,
             LocalDate dateFrom, LocalDate dateTo)
-            throws XHttpError, XApiError {
+            throws XHttpError, XApiError, XError, XAppError {
         GsDateRangeProject inp = new GsDateRangeProject();
         inp.setFrom(dateFrom.toString());
         inp.setTo(dateTo.toString());
         inp.setProjectOid(oidProject);
-        GsTimeRecord records[] = _webClient.sendRequest("GetTimeRecordsProject",
-                inp, GsTimeRecord[].class);
+        GsTimeRecord records[]
+                = _webClient.sendRequest(getService("GetTimeRecordsProject"),
+                        EHttpMethod.POST, inp, GsTimeRecord[].class);
         return records;
     }
+
+    private String getService(String name) {
+        return _prefix + name;
+    }
+    private final String _prefix = "/timerec";
     private final WebClient _webClient;
 }
