@@ -35,7 +35,7 @@ public class ApiMisc implements IApiMisc {
     public GsVersion getVersion()
             throws XHttpError, XApiError, XError, XAppError {
         GsVersion project = _webClient.
-                sendRequest("getVersion", EHttpMethod.GET, GsVersion.class);
+                sendRequest("version", EHttpMethod.GET, GsVersion.class);
         return project;
     }
     private final WebClient _webClient;
