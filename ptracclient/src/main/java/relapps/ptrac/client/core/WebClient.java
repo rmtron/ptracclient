@@ -195,7 +195,7 @@ public class WebClient {
             }
             default:
                 String body = response.body();
-                throw new XHttpError("Error conecting to server: "
+                throw new XHttpError("Error connecting to server: "
                         + serviceURL
                         + "\n" + body,
                         statusCode);
