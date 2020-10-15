@@ -43,7 +43,7 @@ public class ApiTimeRec implements IApiTimeRec {
         GsDateRange dateRange = new GsDateRange();
         dateRange.setFrom(dateFrom.toString());
         dateRange.setTo(dateTo.toString());
-        return _webClient.sendRequest(getService("getTimeRecordsDateRange"),
+        return _webClient.sendRequest(getService("/getTimeRecordsDateRange"),
                 EHttpMethod.POST, dateRange, GsTimeRecord[].class);
     }
 
@@ -55,7 +55,7 @@ public class ApiTimeRec implements IApiTimeRec {
         inp.setFrom(dateFrom.toString());
         inp.setTo(dateTo.toString());
         inp.setOids(oidGroups);
-        return _webClient.sendRequest(getService("GetTimeRecordsGroups"),
+        return _webClient.sendRequest(getService("/getTimeRecordsGroups"),
                 EHttpMethod.POST, inp, GsTimeRecord[].class);
     }
 
@@ -68,7 +68,7 @@ public class ApiTimeRec implements IApiTimeRec {
         inp.setTo(dateTo.toString());
         inp.setProjectOid(oidProject);
         GsTimeRecord records[]
-                = _webClient.sendRequest(getService("GetTimeRecordsProject"),
+                = _webClient.sendRequest(getService("/getTimeRecordsProject"),
                         EHttpMethod.POST, inp, GsTimeRecord[].class);
         return records;
     }

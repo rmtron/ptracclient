@@ -37,14 +37,14 @@ public class ApiUser implements IApiUser {
     @Override
     public GsUser createUser(GsUser user)
             throws XHttpError, XApiError, XError, XAppError {
-        return _webClient.sendRequest(getService("createUser"),
+        return _webClient.sendRequest(getService("/createUser"),
                 EHttpMethod.POST, GsUser.class);
     }
 
     @Override
     public GsUserGroup createUserGroup(GsUserGroup user)
             throws XHttpError, XApiError, XError, XAppError {
-        return _webClient.sendRequest(getService("createUserGroup"),
+        return _webClient.sendRequest(getService("/createUserGroup"),
                 EHttpMethod.POST, GsUserGroup.class);
     }
 
@@ -64,27 +64,27 @@ public class ApiUser implements IApiUser {
     @Override
     public GsUserGroup[] getUserGroups()
             throws XHttpError, XApiError, XError, XAppError {
-        return _webClient.sendRequest(getService("getUserGroups"),
+        return _webClient.sendRequest(getService("/getUserGroups"),
                 EHttpMethod.POST, GsUserGroup[].class);
     }
 
     @Override
     public GsUser[] getUsers() throws XHttpError, XApiError, XError, XAppError {
-        return _webClient.sendRequest(getService("getUsers"),
+        return _webClient.sendRequest(getService("/getUsers"),
                 EHttpMethod.POST, GsUser[].class);
     }
 
     @Override
     public void saveUser(GsUser user)
             throws XHttpError, XApiError, XError, XAppError {
-        _webClient.sendRequest(getService("saveUser"),
+        _webClient.sendRequest(getService("/saveUser"),
                 EHttpMethod.POST, user);
     }
 
     @Override
     public void saveUserGroup(GsUserGroup group)
             throws XHttpError, XApiError, XError, XAppError {
-        _webClient.sendRequest(getService("saveUserGroup"),
+        _webClient.sendRequest(getService("/saveUserGroup"),
                 EHttpMethod.POST, group);
     }
 

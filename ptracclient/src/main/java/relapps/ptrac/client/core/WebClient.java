@@ -213,8 +213,7 @@ public class WebClient {
     }
 
     private URL getServiceUrl(String service) throws MalformedURLException {
-        URL serviceURL = new URL(_rootURL, service);
-        return serviceURL;
+        return new URL(_rootURL + service);
     }
     private String _authToken;
     private final HttpClient _httpClient = HttpClient.newBuilder().build();

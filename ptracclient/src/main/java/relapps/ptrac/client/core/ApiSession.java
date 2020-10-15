@@ -36,20 +36,20 @@ public class ApiSession implements IApiSession {
     @Override
     public void forgetSession()
             throws XHttpError, XApiError, XError, XAppError {
-        _webClient.sendRequest(getService("forgetSession"), EHttpMethod.POST);
+        _webClient.sendRequest(getService("/forgetSession"), EHttpMethod.POST);
     }
 
     @Override
     public GsSession getCurrentSession()
             throws XHttpError, XApiError, XError, XAppError {
-        return _webClient.sendRequest(getService("getSession"),
+        return _webClient.sendRequest(getService("/getSession"),
                 EHttpMethod.POST, GsSession.class);
     }
 
     @Override
     public Integer getSessionDuration()
             throws XHttpError, XApiError, XError, XAppError {
-        return _webClient.sendRequest(getService("getSessionDuration"),
+        return _webClient.sendRequest(getService("/getSessionDuration"),
                 EHttpMethod.POST, Integer.class);
     }
     private String getService(String name) {

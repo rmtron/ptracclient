@@ -37,7 +37,7 @@ public class ApiProject implements IApiProject {
     public GsProject createProject(GsProject project)
             throws XHttpError, XApiError, XError, XAppError {
         GsProject newProject = _webClient.
-                sendRequest(getService("createProject"), EHttpMethod.POST,
+                sendRequest(getService("/createProject"), EHttpMethod.POST,
                         project, GsProject.class);
         return newProject;
     }
@@ -46,7 +46,7 @@ public class ApiProject implements IApiProject {
     public GsProject getProjectByName(String projectName)
             throws XHttpError, XApiError, XError, XAppError {
         GsProject project = _webClient.
-                sendRequest(getService("getProjectByName"), EHttpMethod.POST,
+                sendRequest(getService("/getProjectByName"), EHttpMethod.POST,
                         projectName, GsProject.class);
         return project;
     }
@@ -54,7 +54,7 @@ public class ApiProject implements IApiProject {
     @Override
     public GsProject[] getProjects()
             throws XHttpError, XApiError, XError, XAppError {
-        return _webClient.sendRequest(getService("getProjects"),
+        return _webClient.sendRequest(getService("/getProjects"),
                 EHttpMethod.POST, GsProject[].class);
     }
     private String getService(String name) {
