@@ -25,6 +25,22 @@ import relapps.ptrac.client.gs.GsTimeRecord;
 public interface IApiTimeRec {
 
     /**
+     * Returns an Excel report for the specified date range and groups.
+     *
+     * @param dateFrom The date from.
+     * @param dateTo The date to.
+     * @param oidGroups A list of the group OIDs.
+     * @return An excel file.
+     * @throws XHttpError
+     * @throws XApiError
+     * @throws XError
+     * @throws XAppError
+     */
+    byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
+            String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Returns the time records in a time range.
      *
      * @param dateFrom The from date, use null to not specify a from date.

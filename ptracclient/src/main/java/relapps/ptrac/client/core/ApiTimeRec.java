@@ -73,6 +73,20 @@ public class ApiTimeRec implements IApiTimeRec {
         return records;
     }
 
+    @Override
+    public byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
+            String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError {
+        GsDateRangeOids inp = new GsDateRangeOids();
+        inp.setFrom(dateFrom.toString());
+        inp.setTo(dateTo.toString());
+        inp.setOids(oidGroups);
+        byte data[]
+                = _webClient.sendBlobRequest(getService("/getExcelGroups"),
+                        EHttpMethod.POST, inp);
+        return data;
+    }
+
     private String getService(String name) {
         return _prefix + name;
     }

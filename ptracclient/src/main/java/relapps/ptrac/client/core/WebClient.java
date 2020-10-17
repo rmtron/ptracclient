@@ -62,6 +62,111 @@ public class WebClient {
     }
 
     /**
+     * Send a http request to the server. This method is synchronized to avoid
+     * concurrent calls from different threads. Must handle a pool of
+     * HttpClient's to make it thread safe.
+     *
+     * @param method The HTTP method to use.
+     * @param url The relative URL for the service (relative to the root given
+     * in the constructor).
+     * @return The binary data received from the server.
+     * @throws XHttpError Thrown on a HTTP error.
+     * @throws XAppError Thrown on error from application.
+     * @throws XError Thrown on error.
+     */
+    synchronized public byte[] sendBlobRequest(String url,
+            EHttpMethod method) throws XError, XHttpError, XAppError {
+        return sendBlobRequest(url, method, null);
+    }
+
+    /**
+     * Send a http request to the server. This method is synchronized to avoid
+     * concurrent calls from different threads. Must handle a pool of
+     * HttpClient's to make it thread safe.
+     *
+     * @param <I> The input object type.
+     * @param input The input object (send to server).
+     * @param method The HTTP method to use.
+     * @param url The relative URL for the service (relative to the root given
+     * in the constructor).
+     * @return The binary data received from the server.
+     * @throws XHttpError Thrown on a HTTP error.
+     * @throws XAppError Thrown on error from application.
+     * @throws XError Thrown on error.
+     */
+    synchronized public <I> byte[] sendBlobRequest(String url,
+            EHttpMethod method, I input) throws XError, XHttpError, XAppError {
+        String inputJson = toString(input);
+        URL serviceURL;
+        try {
+            serviceURL = getServiceUrl(url);
+        } catch (MalformedURLException ex) {
+            throw new XError("Error fetching URL", ex);
+        }
+        HttpRequest.Builder builder = HttpRequest.newBuilder();
+        try {
+            builder = builder.uri(serviceURL.toURI());
+        } catch (URISyntaxException ex) {
+            throw new XError("HttpRequest.Builder", ex);
+        }
+        switch (method) {
+            case DELETE:
+                builder = builder.DELETE();
+                break;
+            case GET:
+                builder = builder.GET();
+                break;
+            case POST:
+                builder = builder.POST(HttpRequest.BodyPublishers.ofString(
+                        inputJson));
+                break;
+            case PUT:
+                builder = builder.PUT(HttpRequest.BodyPublishers.ofString(
+                        inputJson));
+                break;
+        }
+        if (_authToken != null) {
+            builder = builder.setHeader("Authorization", _authToken);
+        }
+        builder = builder.setHeader("Content-Type", "application/json");
+
+        HttpRequest request = builder.build();
+        // HttpClient httpClient = HttpClient.newBuilder().build();
+        HttpResponse<byte[]> response;
+        try {
+            response = _httpClient.send(request,
+                    HttpResponse.BodyHandlers.ofByteArray());
+        } catch (IOException | InterruptedException ex) {
+            throw new XError("HttpClient send", ex);
+        }
+        int statusCode = response.statusCode();
+        byte[] output;
+        switch (statusCode) {
+            case 200: {
+                output = response.body();
+                // Gson gson = GsonFactory.getGson();
+                // output = gson.fromJson(body, outputClass);
+                break;
+            }
+            case 400: {
+                output = null;
+                byte[] body = response.body();
+                System.out.println(body);
+                throwXAppError(url, method, "");
+                break;
+            }
+            default: {
+                byte[] body = response.body();
+                throw new XHttpError("Error conecting to server: "
+                        + serviceURL
+                        + "\n",
+                        statusCode);
+            }
+        }
+        return output;
+    }
+
+    /**
      * Make a request without input and output parameters to the server.
      *
      * @param url The relative URL for the service (relative to the root given
@@ -133,8 +238,7 @@ public class WebClient {
     <I, O> O sendRequest(String url, EHttpMethod method,
             I input, Class<O> outputClass)
             throws XHttpError, XApiError, XError, XAppError {
-        Gson gson = new Gson();
-        String inputJson = gson.toJson(input);
+        String inputJson = toString(input);
 
         HttpRequest.Builder builder = HttpRequest.newBuilder();
         URL serviceURL;
@@ -180,18 +284,15 @@ public class WebClient {
         switch (statusCode) {
             case 200: {
                 String body = response.body();
+                Gson gson = GsonFactory.getGson();
                 output = gson.fromJson(body, outputClass);
                 break;
             }
             case 400: {
+                output = null;
                 String body = response.body();
-                GsError error = gson.fromJson(body, GsError.class);
-                StringBuilder msg = new StringBuilder();
-                msg.append("Error accessing: ");
-                msg.append(method.toString());
-                msg.append(" ");
-                msg.append(serviceURL);
-                throw new XAppError(error, msg.toString());
+                throwXAppError(url, method, body);
+                break;
             }
             default:
                 String body = response.body();
@@ -214,6 +315,35 @@ public class WebClient {
 
     private URL getServiceUrl(String service) throws MalformedURLException {
         return new URL(_rootURL + service);
+    }
+
+    private void throwXAppError(String url, EHttpMethod method, String body)
+            throws XAppError {
+        Gson gson = GsonFactory.getGson();
+        GsError error = gson.fromJson(body, GsError.class);
+        StringBuilder msg = new StringBuilder();
+        msg.append("Error accessing: ");
+        msg.append(method.toString());
+        msg.append(" ");
+        msg.append(url);
+        throw new XAppError(error, msg.toString());
+    }
+
+    /**
+     * Convert to JSON string.
+     *
+     * @param input The object to convert.
+     * @return A JSON string representation.
+     */
+    private String toString(Object input) {
+        Gson gson = GsonFactory.getGson();
+        String inputJson;
+        if (input instanceof String) {
+            inputJson = input.toString();
+        } else {
+            inputJson = gson.toJson(input);
+        }
+        return inputJson;
     }
     private String _authToken;
     private final HttpClient _httpClient = HttpClient.newBuilder().build();
