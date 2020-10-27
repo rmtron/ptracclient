@@ -23,11 +23,20 @@ import relapps.ptrac.client.gs.GsProject;
 public interface IApiProject {
 
     /**
-     * Create a project.
+     * Create a project. It is not necessary to add information to the following
+     * fields in GsProject:
+     * <ul>
+     * <li>children</li>
+     * <li>dateCreated</li>
+     * <li>dateModified</li>
+     * <li>numChildren</li>
+     * <li>numUsage</li>
+     * <li>parentName</li>
+     * </ul>
      *
      * @param project The data for the project to create.
      * @return The project created.
-     * @throws XHttpError Error response from the backend.
+     * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
      */
     GsProject createProject(GsProject project) throws XHttpError, XApiError;
