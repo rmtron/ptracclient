@@ -14,6 +14,7 @@
  */
 package relapps.ptrac.client.exif;
 
+import relapps.ptrac.client.gs.GsAppVersion;
 import relapps.ptrac.client.gs.GsVersion;
 
 /**
@@ -22,6 +23,18 @@ import relapps.ptrac.client.gs.GsVersion;
  * @author RMT
  */
 public interface IApiMisc {
+
+    /**
+     * Returns information about the latest official release.
+     *
+     * @return The application information.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsAppVersion getLatestVersion()
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Returns the ptrac version information.

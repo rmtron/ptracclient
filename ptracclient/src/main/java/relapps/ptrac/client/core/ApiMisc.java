@@ -20,6 +20,7 @@ import relapps.ptrac.client.exif.XApiError;
 import relapps.ptrac.client.exif.XAppError;
 import relapps.ptrac.client.exif.XError;
 import relapps.ptrac.client.exif.XHttpError;
+import relapps.ptrac.client.gs.GsAppVersion;
 import relapps.ptrac.client.gs.GsVersion;
 
 /**
@@ -27,8 +28,16 @@ import relapps.ptrac.client.gs.GsVersion;
  * @author RMT
  */
 public class ApiMisc implements IApiMisc {
+
     ApiMisc(WebClient webClient) {
         _webClient = webClient;
+    }
+
+    public GsAppVersion getLatestVersion()
+            throws XHttpError, XApiError, XError, XAppError {
+        GsAppVersion project = _webClient.
+                sendRequest("latestVersion", EHttpMethod.GET, GsAppVersion.class);
+        return project;
     }
 
     @Override
