@@ -151,12 +151,10 @@ public class WebClient {
             case 400: {
                 output = null;
                 byte[] body = response.body();
-                System.out.println(body);
                 throwXAppError(url, method, "");
                 break;
             }
             default: {
-                byte[] body = response.body();
                 throw new XHttpError("Error conecting to server: "
                         + serviceURL
                         + "\n",
