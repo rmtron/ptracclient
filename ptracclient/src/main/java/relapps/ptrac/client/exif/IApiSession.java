@@ -25,27 +25,35 @@ public interface IApiSession {
     /**
      * Forget (dispose) the session.
      *
-     * @throws XHttpError Error response from the backend.
+     * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    void forgetSession() throws XHttpError, XApiError;
+    void forgetSession() throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Get information about the current session.
      *
      * @return The session information.
-     * @throws XHttpError Error response from the backend.
+     * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsSession getCurrentSession() throws XHttpError, XApiError;
+    GsSession getCurrentSession()
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Returns the maximum inactive session duration in seconds before closing
      * session.
      *
      * @return The time in seconds.
-     * @throws XHttpError Error response from the backend.
+     * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    Integer getSessionDuration() throws XHttpError, XApiError;
+    Integer getSessionDuration()
+            throws XHttpError, XApiError, XError, XAppError;
 }

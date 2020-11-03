@@ -14,8 +14,11 @@
  */
 package relapps.ptrac.client.core;
 
+import relapps.ptrac.client.exif.EHttpMethod;
 import relapps.ptrac.client.exif.IApiProject;
 import relapps.ptrac.client.exif.XApiError;
+import relapps.ptrac.client.exif.XAppError;
+import relapps.ptrac.client.exif.XError;
 import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsProject;
 
@@ -32,25 +35,31 @@ public class ApiProject implements IApiProject {
 
     @Override
     public GsProject createProject(GsProject project)
-            throws XHttpError, XApiError {
+            throws XHttpError, XApiError, XError, XAppError {
         GsProject newProject = _webClient.
-                sendRequest("CreateProject", project, GsProject.class);
+                sendRequest(getService("/createProject"), EHttpMethod.POST,
+                        project, GsProject.class);
         return newProject;
     }
 
     @Override
     public GsProject getProjectByName(String projectName)
-            throws XHttpError, XApiError {
+            throws XHttpError, XApiError, XError, XAppError {
         GsProject project = _webClient.
-                sendRequest("GetProjectByName", projectName, GsProject.class);
+                sendRequest(getService("/getProjectByName"), EHttpMethod.POST,
+                        projectName, GsProject.class);
         return project;
     }
 
     @Override
-    public GsProject[] getProjects() throws XHttpError, XApiError {
-        return _webClient.sendRequest("GetProjects",
-                GsProject[].class);
+    public GsProject[] getProjects()
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getProjects"),
+                EHttpMethod.POST, GsProject[].class);
     }
-
+    private String getService(String name) {
+        return _prefix + name;
+    }
+    private final String _prefix = "/project";
     private final WebClient _webClient;
 }

@@ -25,6 +25,22 @@ import relapps.ptrac.client.gs.GsTimeRecord;
 public interface IApiTimeRec {
 
     /**
+     * Returns an Excel report for the specified date range and groups.
+     *
+     * @param dateFrom The date from.
+     * @param dateTo The date to.
+     * @param oidGroups A list of the group OIDs.
+     * @return An excel file.
+     * @throws XHttpError
+     * @throws XApiError
+     * @throws XError
+     * @throws XAppError
+     */
+    byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
+            String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Returns the time records in a time range.
      *
      * @param dateFrom The from date, use null to not specify a from date.
@@ -32,9 +48,12 @@ public interface IApiTimeRec {
      * @return A vector of the time records.
      * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     GsTimeRecord[] getTimeRecords(
-            LocalDate dateFrom, LocalDate dateTo) throws XHttpError, XApiError;
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Returns the time records for a list of groups in a time range.
@@ -45,9 +64,11 @@ public interface IApiTimeRec {
      * @return A vector of the time records.
      * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     GsTimeRecord[] getTimeRecordsGroups(String[] oidGroups, LocalDate dateFrom,
-            LocalDate dateTo) throws XHttpError, XApiError;
+            LocalDate dateTo) throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Returns the time records for a project in a time range. Note: Returns
@@ -57,9 +78,12 @@ public interface IApiTimeRec {
      * @param dateFrom The from date.
      * @param dateTo The to date.
      * @return A vector of the time records.
-     * @throws XHttpError Error response from the backend.
+     * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     GsTimeRecord[] getTimeRecordsProject(String oidProject,
-            LocalDate dateFrom, LocalDate dateTo) throws XHttpError, XApiError;
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError;
 }

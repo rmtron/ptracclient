@@ -38,8 +38,11 @@ public interface IApiProject {
      * @return The project created.
      * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsProject createProject(GsProject project) throws XHttpError, XApiError;
+    GsProject createProject(GsProject project)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Lookup a project.
@@ -48,8 +51,11 @@ public interface IApiProject {
      * @return The project found or null if not found.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsProject getProjectByName(String projectName) throws XHttpError, XApiError;
+    GsProject getProjectByName(String projectName)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Get the list of the defined projects.
@@ -57,6 +63,9 @@ public interface IApiProject {
      * @return The list of projects.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsProject[] getProjects() throws XHttpError, XApiError;
+    GsProject[] getProjects()
+            throws XHttpError, XApiError, XError, XAppError;
 }

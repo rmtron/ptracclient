@@ -30,8 +30,11 @@ public interface IApiUser {
      * @return The user created with the assigned OID.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsUser createUser(GsUser user) throws XHttpError, XApiError;
+    GsUser createUser(GsUser user)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Create a new user group.
@@ -40,8 +43,11 @@ public interface IApiUser {
      * @return The user created created with the assigned OID.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsUserGroup createUserGroup(GsUserGroup user) throws XHttpError, XApiError;
+    GsUserGroup createUserGroup(GsUserGroup user)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Lookup a user group by name.
@@ -50,9 +56,11 @@ public interface IApiUser {
      * @return The group found or null if not found.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     GsUserGroup getUserGroupByName(String groupName)
-            throws XHttpError, XApiError;
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Get the user groups.
@@ -60,8 +68,11 @@ public interface IApiUser {
      * @return A list of the user groups.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsUserGroup[] getUserGroups() throws XHttpError, XApiError;
+    GsUserGroup[] getUserGroups()
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Get the users.
@@ -69,8 +80,10 @@ public interface IApiUser {
      * @return A list of the users.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    GsUser[] getUsers() throws XHttpError, XApiError;
+    GsUser[] getUsers() throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Save user information.
@@ -78,8 +91,11 @@ public interface IApiUser {
      * @param user The user to save.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    void saveUser(GsUser user) throws XHttpError, XApiError;
+    void saveUser(GsUser user)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Save user group information.
@@ -87,6 +103,9 @@ public interface IApiUser {
      * @param group The user group to save.
      * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
-    void saveUserGroup(GsUserGroup group) throws XHttpError, XApiError;
+    void saveUserGroup(GsUserGroup group)
+            throws XHttpError, XApiError, XError, XAppError;
 }

@@ -37,9 +37,14 @@ public class FWebApi {
      * @throws MalformedURLException Thrown on invalid URL.
      * @throws XInvalidCredentials Thrown on invalid credentials.
      * @throws XApiError Thrown on error in API.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     * @throws XHttpError Error response from the back-end.
+     *
      */
     public static IWebApi connect(String url, String user, String passwd)
-            throws MalformedURLException, XInvalidCredentials, XApiError {
+            throws MalformedURLException, XInvalidCredentials, XApiError,
+            XHttpError, XError, XAppError {
         return new WebApi(url, user, passwd);
     }
 }
