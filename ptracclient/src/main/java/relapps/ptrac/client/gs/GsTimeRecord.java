@@ -15,6 +15,7 @@
 package relapps.ptrac.client.gs;
 
 /**
+ * Serialization of a time record.
  *
  * @author RMT
  */
@@ -22,6 +23,10 @@ public class GsTimeRecord extends GsObject {
 
     public String getComment() {
         return comment;
+    }
+
+    public String getCommentExp() {
+        return commentExp;
     }
 
     public String getDate() {
@@ -68,6 +73,7 @@ public class GsTimeRecord extends GsObject {
         this.userOid = userOid;
     }
     private String comment;
+    private String commentExp;
     private String date;
     private boolean frozen;
     private String projectOid;
