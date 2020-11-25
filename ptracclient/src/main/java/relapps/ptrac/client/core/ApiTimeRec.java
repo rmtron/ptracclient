@@ -24,6 +24,8 @@ import relapps.ptrac.client.exif.XHttpError;
 import relapps.ptrac.client.gs.GsDateRange;
 import relapps.ptrac.client.gs.GsDateRangeOids;
 import relapps.ptrac.client.gs.GsDateRangeProject;
+import relapps.ptrac.client.gs.GsPeriod;
+import relapps.ptrac.client.gs.GsTimeAccum;
 import relapps.ptrac.client.gs.GsTimeRecord;
 
 /**
@@ -35,6 +37,27 @@ public class ApiTimeRec implements IApiTimeRec {
 
     ApiTimeRec(WebClient webClient) {
         _webClient = webClient;
+    }
+
+    @Override
+    public byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
+            String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError {
+        GsDateRangeOids inp = new GsDateRangeOids();
+        inp.setFrom(dateFrom.toString());
+        inp.setTo(dateTo.toString());
+        inp.setOids(oidGroups);
+        byte data[]
+                = _webClient.sendBlobRequest(getService("/getExcelGroups"),
+                        EHttpMethod.POST, inp);
+        return data;
+    }
+
+    @Override
+    public GsPeriod[] getTimePeriods(int year) throws XHttpError, XApiError,
+            XError, XAppError {
+        return _webClient.sendRequest(getService("/getTimePeriods"),
+                EHttpMethod.POST, year, GsPeriod[].class);
     }
 
     @Override
@@ -60,6 +83,18 @@ public class ApiTimeRec implements IApiTimeRec {
     }
 
     @Override
+    public GsTimeAccum[] getTimeRecordsGroupsAcc(String[] oidGroups,
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError {
+        GsDateRangeOids inp = new GsDateRangeOids();
+        inp.setFrom(dateFrom.toString());
+        inp.setTo(dateTo.toString());
+        inp.setOids(oidGroups);
+        return _webClient.sendRequest(getService("/getTimeRecordsGroupsAcc"),
+                EHttpMethod.POST, inp, GsTimeAccum[].class);
+    }
+
+    @Override
     public GsTimeRecord[] getTimeRecordsProject(String oidProject,
             LocalDate dateFrom, LocalDate dateTo)
             throws XHttpError, XApiError, XError, XAppError {
@@ -71,20 +106,6 @@ public class ApiTimeRec implements IApiTimeRec {
                 = _webClient.sendRequest(getService("/getTimeRecordsProject"),
                         EHttpMethod.POST, inp, GsTimeRecord[].class);
         return records;
-    }
-
-    @Override
-    public byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
-            String[] oidGroups)
-            throws XHttpError, XApiError, XError, XAppError {
-        GsDateRangeOids inp = new GsDateRangeOids();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
-        inp.setOids(oidGroups);
-        byte data[]
-                = _webClient.sendBlobRequest(getService("/getExcelGroups"),
-                        EHttpMethod.POST, inp);
-        return data;
     }
 
     private String getService(String name) {

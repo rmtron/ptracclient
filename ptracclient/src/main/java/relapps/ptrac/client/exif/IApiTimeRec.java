@@ -15,6 +15,8 @@
 package relapps.ptrac.client.exif;
 
 import java.time.LocalDate;
+import relapps.ptrac.client.gs.GsPeriod;
+import relapps.ptrac.client.gs.GsTimeAccum;
 import relapps.ptrac.client.gs.GsTimeRecord;
 
 /**
@@ -31,13 +33,26 @@ public interface IApiTimeRec {
      * @param dateTo The date to.
      * @param oidGroups A list of the group OIDs.
      * @return An excel file.
-     * @throws XHttpError
-     * @throws XApiError
-     * @throws XError
-     * @throws XAppError
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
      */
     byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
             String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Returns the periods for a given year.
+     *
+     * @param year The year.
+     * @return A list of periods.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsPeriod[] getTimePeriods(int year)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
@@ -69,6 +84,22 @@ public interface IApiTimeRec {
      */
     GsTimeRecord[] getTimeRecordsGroups(String[] oidGroups, LocalDate dateFrom,
             LocalDate dateTo) throws XHttpError, XApiError, XError, XAppError;
+    /**
+     * Get time records for groups and periods. Returns project time accumulated
+     * for a list of groups in a time range with totals for periods.
+     *
+     * @param oidGroups A vector of the group OIDs.
+     * @param dateFrom The from date.
+     * @param dateTo The to date.
+     * @return A vector of the accumulated times for users-projects.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsTimeAccum[] getTimeRecordsGroupsAcc(String[] oidGroups,
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError;
 
     /**
      * Returns the time records for a project in a time range. Note: Returns
