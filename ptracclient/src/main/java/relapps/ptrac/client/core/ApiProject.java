@@ -43,6 +43,15 @@ public class ApiProject implements IApiProject {
     }
 
     @Override
+    public Boolean existsProjectByName(String projectName) throws XHttpError,
+            XApiError, XError, XAppError {
+        Boolean exists = _webClient.
+                sendRequest(getService("/existsProjectByName"), EHttpMethod.POST,
+                        projectName, Boolean.class);
+        return exists;
+    }
+
+    @Override
     public GsProject getProjectByName(String projectName)
             throws XHttpError, XApiError, XError, XAppError {
         GsProject project = _webClient.

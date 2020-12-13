@@ -45,6 +45,19 @@ public interface IApiProject {
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
+     * Check if a project exists.
+     *
+     * @param projectName The project name.
+     * @return True if the project exists else false.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    Boolean existsProjectByName(String projectName)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Lookup a project.
      *
      * @param projectName The project name.
