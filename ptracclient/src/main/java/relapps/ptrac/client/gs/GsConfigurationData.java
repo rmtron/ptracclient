@@ -20,66 +20,66 @@ package relapps.ptrac.client.gs;
  */
 public class GsConfigurationData {
 
-    public String getDBHost() {
-        return DBHost;
+    public String getDbHost() {
+        return dbHost;
     }
 
-    public String getDBName() {
-        return DBName;
+    public String getDbName() {
+        return dbName;
     }
 
-    public String getDBPasswd() {
-        return DBPasswd;
+    public String getDbPasswd() {
+        return dbPasswd;
     }
 
-    public int getDBPort() {
-        return DBPort;
+    public int getDbPort() {
+        return dbPort;
     }
 
-    public String getDBType() {
-        return DBType;
+    public String getDbType() {
+        return dbType;
     }
 
-    public String getDBUser() {
-        return DBUser;
+    public String getDbUser() {
+        return dbUser;
     }
 
-    public String getLOGFolder() {
-        return LOGFolder;
+    public String getLogFolder() {
+        return logFolder;
     }
 
-    public void setDBHost(String DBHost) {
-        this.DBHost = DBHost;
+    public void setDbHost(String dbHost) {
+        this.dbHost = dbHost;
     }
 
-    public void setDBName(String DBName) {
-        this.DBName = DBName;
+    public void setDbName(String dbName) {
+        this.dbName = dbName;
     }
 
-    public void setDBPasswd(String DBPasswd) {
-        this.DBPasswd = DBPasswd;
+    public void setDbPasswd(String dbPasswd) {
+        this.dbPasswd = dbPasswd;
     }
 
-    public void setDBPort(int DBPort) {
-        this.DBPort = DBPort;
+    public void setDbPort(int dbPort) {
+        this.dbPort = dbPort;
     }
 
-    public void setDBType(String DBType) {
-        this.DBType = DBType;
+    public void setDbType(String dbType) {
+        this.dbType = dbType;
     }
 
-    public void setDBUser(String DBUser) {
-        this.DBUser = DBUser;
+    public void setDbUser(String dbUser) {
+        this.dbUser = dbUser;
     }
 
-    public void setLOGFolder(String LOGFolder) {
-        this.LOGFolder = LOGFolder;
+    public void setLogFolder(String logFolder) {
+        this.logFolder = logFolder;
     }
-    private String DBHost;
-    private String DBName;
-    private String DBPasswd;
-    private int DBPort;
-    private String DBType;
-    private String DBUser;
-    private String LOGFolder;
+    private String dbHost;
+    private String dbName;
+    private String dbPasswd;
+    private int dbPort;
+    private String dbType;
+    private String dbUser;
+    private String logFolder;
 }

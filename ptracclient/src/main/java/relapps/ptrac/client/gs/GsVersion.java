@@ -52,6 +52,10 @@ public class GsVersion {
         return minor;
     }
 
+    public String getVcs() {
+        return vcs;
+    }
+
     public String getVersion() {
         return version;
     }
@@ -92,6 +96,10 @@ public class GsVersion {
         this.minor = minor;
     }
 
+    public void setVcs(String vcs) {
+        this.vcs = vcs;
+    }
+
     public void setVersion(String version) {
         this.version = version;
     }
@@ -107,6 +115,7 @@ public class GsVersion {
     private int major;
     private int micro;
     private int minor;
+    private String vcs;
     private String version;
     private String versionString;
 }

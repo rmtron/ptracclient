@@ -53,6 +53,10 @@ public class GsTimeRecord extends GsObject {
         this.comment = comment;
     }
 
+    public void setCommentExp(String commentExp) {
+        this.commentExp = commentExp;
+    }
+
     public void setDate(String date) {
         this.date = date;
     }

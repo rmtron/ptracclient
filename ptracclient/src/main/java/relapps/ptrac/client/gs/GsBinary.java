@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2020 RELapps (https://relapps.net)
+ * Copyright(c) 2021 RELapps (https://relapps.net)
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,36 +15,20 @@
 package relapps.ptrac.client.gs;
 
 /**
- * Handles serialization of an error message.
+ * Serialization of binary data.
  *
  * @author RMT
  */
-public class GsError {
-
-    public GsError(String status, String message) {
-        this.exception = status;
-        this.message = message;
-    }
+public class GsBinary {
 
     @SuppressWarnings("ReturnOfCollectionOrArrayField")
-    public String[] getCallstack() {
-        return callstack;
-    }
-
-    public String getException() {
-        return exception;
-    }
-
-    public String getMessage() {
-        return message;
+    public byte[] getData() {
+        return data;
     }
 
     @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter")
-    public void setCallstack(String callstack[]) {
-        this.callstack = callstack;
+    public void setData(byte[] data) {
+        this.data = data;
     }
-
-    private String[] callstack;
-    private final String exception;
-    private final String message;
+    private byte[] data;
 }

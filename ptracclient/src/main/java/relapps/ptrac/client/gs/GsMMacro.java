@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2020 RELapps (https://relapps.net)
+ * Copyright(c) 2021 RELapps (https://relapps.net)
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,25 +15,26 @@
 package relapps.ptrac.client.gs;
 
 /**
- * Simple text serialization.
  *
  * @author RMT
  */
-public class GsText {
+public class GsMMacro {
 
-    public GsText() {
+    public String getCode() {
+        return code;
     }
 
-    public GsText(String text) {
-        this.text = text;
+    public String getDefinition() {
+        return definition;
     }
 
-    public String getText() {
-        return text;
+    public void setCode(String code) {
+        this.code = code;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setDefinition(String definition) {
+        this.definition = definition;
     }
-    private String text;
+    private String code;
+    private String definition;
 }

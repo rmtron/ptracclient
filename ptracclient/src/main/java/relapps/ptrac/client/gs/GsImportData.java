@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2020 RELapps (https://relapps.net)
+ * Copyright(c) 2021 RELapps (https://relapps.net)
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,25 +15,17 @@
 package relapps.ptrac.client.gs;
 
 /**
- * Simple text serialization.
  *
  * @author RMT
  */
-public class GsText {
+public class GsImportData extends GsBinary {
 
-    public GsText() {
+    public String getSocketId() {
+        return socketId;
     }
 
-    public GsText(String text) {
-        this.text = text;
+    public void setSocketId(String socketId) {
+        this.socketId = socketId;
     }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-    private String text;
+    private String socketId;
 }

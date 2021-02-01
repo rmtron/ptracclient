@@ -23,22 +23,22 @@ package relapps.ptrac.client.gs;
     "AssignmentToCollectionOrArrayFieldFromParameter"})
 public class GsUserGroupSelection {
 
+    public String getObjectOid() {
+        return objectOid;
+    }
+
     public GsUserGroupSel[] getSelection() {
         return selection;
     }
 
-    public String getObjectOid() {
-        return objectOid;
+    public void setObjectOid(String objectOid) {
+        this.objectOid = objectOid;
     }
 
     @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter")
     public void setSelection(GsUserGroupSel[] selection) {
         this.selection = selection;
     }
-
-    public void setObjectOid(String objectOid) {
-        this.objectOid = objectOid;
-    }
-    private GsUserGroupSel selection[];
     private String objectOid;
+    private GsUserGroupSel selection[];
 }

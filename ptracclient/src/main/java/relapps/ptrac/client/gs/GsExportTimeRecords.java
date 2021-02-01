@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2020 RELapps (https://relapps.net)
+ * Copyright(c) 2021 RELapps (https://relapps.net)
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,36 +15,37 @@
 package relapps.ptrac.client.gs;
 
 /**
- * Handles serialization of an error message.
  *
  * @author RMT
  */
-public class GsError {
+public class GsExportTimeRecords {
 
-    public GsError(String status, String message) {
-        this.exception = status;
-        this.message = message;
+    public GsDateRange getDateRange() {
+        return dateRange;
     }
 
     @SuppressWarnings("ReturnOfCollectionOrArrayField")
-    public String[] getCallstack() {
-        return callstack;
+    public String[] getGroupOids() {
+        return groupOids;
     }
 
-    public String getException() {
-        return exception;
+    public String getSocketId() {
+        return socketId;
     }
 
-    public String getMessage() {
-        return message;
+    public void setDateRange(GsDateRange dateRange) {
+        this.dateRange = dateRange;
     }
 
     @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter")
-    public void setCallstack(String callstack[]) {
-        this.callstack = callstack;
+    public void setGroupOids(String[] groupOids) {
+        this.groupOids = groupOids;
     }
 
-    private String[] callstack;
-    private final String exception;
-    private final String message;
+    public void setSocketId(String socketId) {
+        this.socketId = socketId;
+    }
+    private GsDateRange dateRange;
+    private String[] groupOids;
+    private String socketId;
 }

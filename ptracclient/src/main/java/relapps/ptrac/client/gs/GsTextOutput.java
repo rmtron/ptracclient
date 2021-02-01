@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2020 RELapps (https://relapps.net)
+ * Copyright(c) 2021 RELapps (https://relapps.net)
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -15,25 +15,35 @@
 package relapps.ptrac.client.gs;
 
 /**
- * Simple text serialization.
+ * Serialization of text output.
  *
  * @author RMT
  */
-public class GsText {
+public class GsTextOutput {
 
-    public GsText() {
+    public GsTextOutput() {
     }
 
-    public GsText(String text) {
-        this.text = text;
+    public GsTextOutput(String stdout, String stderr) {
+        this.stderr = stderr;
+        this.stdout = stdout;
     }
 
-    public String getText() {
-        return text;
+    public String getStderr() {
+        return stderr;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public String getStdout() {
+        return stdout;
     }
-    private String text;
+
+    public void setStderr(String stderr) {
+        this.stderr = stderr;
+    }
+
+    public void setStdout(String stdout) {
+        this.stdout = stdout;
+    }
+    private String stderr;
+    private String stdout;
 }
