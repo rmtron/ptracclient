@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-module Ptracclient {
+module relapps.ptracclient {
     exports relapps.ptrac.client.exif;
     exports relapps.ptrac.client.gs;
 

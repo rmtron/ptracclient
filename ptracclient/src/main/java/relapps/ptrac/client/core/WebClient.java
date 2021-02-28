@@ -281,9 +281,13 @@ public class WebClient {
         O output;
         switch (statusCode) {
             case 200: {
-                String body = response.body();
-                Gson gson = GsonFactory.getGson();
-                output = gson.fromJson(body, outputClass);
+                if (outputClass != null) {
+                    String body = response.body();
+                    Gson gson = GsonFactory.getGson();
+                    output = gson.fromJson(body, outputClass);
+                } else {
+                    output = null;
+                }
                 break;
             }
             case 400: {
