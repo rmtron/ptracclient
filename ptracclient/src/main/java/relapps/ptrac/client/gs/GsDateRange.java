@@ -15,6 +15,7 @@
 package relapps.ptrac.client.gs;
 
 /**
+ * Serialization of a date range.
  *
  * @author RMT
  */

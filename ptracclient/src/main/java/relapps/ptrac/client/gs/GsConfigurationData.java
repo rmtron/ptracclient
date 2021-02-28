@@ -48,6 +48,10 @@ public class GsConfigurationData {
         return logFolder;
     }
 
+    public boolean isUseSSL() {
+        return useSSL;
+    }
+
     public void setDbHost(String dbHost) {
         this.dbHost = dbHost;
     }
@@ -75,6 +79,10 @@ public class GsConfigurationData {
     public void setLogFolder(String logFolder) {
         this.logFolder = logFolder;
     }
+
+    public void setUseSSL(boolean useSSL) {
+        this.useSSL = useSSL;
+    }
     private String dbHost;
     private String dbName;
     private String dbPasswd;
@@ -82,4 +90,5 @@ public class GsConfigurationData {
     private String dbType;
     private String dbUser;
     private String logFolder;
+    private boolean useSSL;
 }
