@@ -1,4 +1,6 @@
 # ptracclient
-A Java web service client for ptrac
+A Java web service client for ptrac.
 
-https://relapps.net
+ptracexample contains a simple example application.
+
+You can download ptrac from: https://relapps.net
