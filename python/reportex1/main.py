@@ -24,17 +24,20 @@
 # pip install requests
 #
 
+# Use implementation from ptraclib
+import sys
+
+sys.path.append('../ptraclib')
+
 from ptracapi import PtracApi
 from timerecuser import TimeRecUser
-import json
-
 
 def main():
     #################################################################
     # Input parameters
 
     # The ptrac URL
-    inp_url = 'https://localhost/ptrac'
+    inp_url = 'http://localhost:9080/'
 
     # The user name and password for the access to ptrac
     inp_user = 'admin'

@@ -55,6 +55,14 @@ class PtracApi:
         else:
             return None
 
+    # Lookup a user by OID.
+    def get_user(self, user_oid):
+        user = self.__httpClient.post('/user/getUser', user_oid)
+        if user is not None:
+            return json.loads(user)
+        else:
+            return None
+
     # Fetch time records for a group in a date range
     def get_time_records_groups(self, date_from, date_to, user_group):
         args = {
@@ -95,3 +103,15 @@ class PtracApi:
         }
         data = self.__httpClient.post('/expimp/export', args)
         return data
+
+    # Returns the events in the action log.
+    def get_action_log(self):
+        args = {
+            "from": None,
+            "to": None
+        }
+        data = self.__httpClient.post('/log/getEvents', args)
+        if data is not None:
+            return json.loads(data)
+        else:
+            return None
