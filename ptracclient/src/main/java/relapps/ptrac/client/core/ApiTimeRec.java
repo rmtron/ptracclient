@@ -25,6 +25,7 @@ import relapps.ptrac.client.gs.GsDateRange;
 import relapps.ptrac.client.gs.GsDateRangeOids;
 import relapps.ptrac.client.gs.GsDateRangeProject;
 import relapps.ptrac.client.gs.GsPeriod;
+import relapps.ptrac.client.gs.GsProjectUserTime;
 import relapps.ptrac.client.gs.GsTimeAccum;
 import relapps.ptrac.client.gs.GsTimeRecord;
 
@@ -51,6 +52,15 @@ public class ApiTimeRec implements IApiTimeRec {
                 = _webClient.sendBlobRequest(getService("/getExcelGroups"),
                         EHttpMethod.POST, inp);
         return data;
+    }
+
+    @Override
+    public GsProjectUserTime[] getProjectUserTimeReportGroups(
+            GsDateRangeOids dateRange)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService(
+                "/getProjectUserTimeReportGroups"),
+                EHttpMethod.POST, dateRange, GsProjectUserTime[].class);
     }
 
     @Override

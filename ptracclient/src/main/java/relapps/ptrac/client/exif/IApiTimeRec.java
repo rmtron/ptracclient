@@ -15,7 +15,9 @@
 package relapps.ptrac.client.exif;
 
 import java.time.LocalDate;
+import relapps.ptrac.client.gs.GsDateRangeOids;
 import relapps.ptrac.client.gs.GsPeriod;
+import relapps.ptrac.client.gs.GsProjectUserTime;
 import relapps.ptrac.client.gs.GsTimeAccum;
 import relapps.ptrac.client.gs.GsTimeRecord;
 
@@ -40,6 +42,20 @@ public interface IApiTimeRec {
      */
     byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
             String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Returns project and user time report for a list of groups in a time
+     * range.
+     *
+     * @param dateRange Date range with group OIDs.
+     * @return A list of the project, user time-records.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsProjectUserTime[] getProjectUserTimeReportGroups(GsDateRangeOids dateRange)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
@@ -84,6 +100,7 @@ public interface IApiTimeRec {
      */
     GsTimeRecord[] getTimeRecordsGroups(String[] oidGroups, LocalDate dateFrom,
             LocalDate dateTo) throws XHttpError, XApiError, XError, XAppError;
+
     /**
      * Get time records for groups and periods. Returns project time accumulated
      * for a list of groups in a time range with totals for periods.
