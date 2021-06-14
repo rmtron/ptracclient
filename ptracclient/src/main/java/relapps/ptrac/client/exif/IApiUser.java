@@ -86,6 +86,18 @@ public interface IApiUser {
     GsUser[] getUsers() throws XHttpError, XApiError, XError, XAppError;
 
     /**
+     * Get all the users included the users marked as deleted.
+     *
+     * @return A list of the users.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsUser[] getUsersIncDeleted()
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Save user information.
      *
      * @param user The user to save.

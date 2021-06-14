@@ -36,6 +36,10 @@ public class GsUser extends GsObject {
         return dateCreation;
     }
 
+    public String getDateDeleted() {
+        return dateDeleted;
+    }
+
     public String getDateLastAccess() {
         return dateLastAccess;
     }
@@ -101,6 +105,10 @@ public class GsUser extends GsObject {
         this.dateCreation = dateCreation;
     }
 
+    public void setDateDeleted(String dateDeleted) {
+        this.dateDeleted = dateDeleted;
+    }
+
     public void setDateLastAccess(String dateLastAccess) {
         this.dateLastAccess = dateLastAccess;
     }
@@ -157,6 +165,7 @@ public class GsUser extends GsObject {
     private int accesses;
     private String calendarOid;
     private String dateCreation;
+    private String dateDeleted;
     private String dateLastAccess;
     private String dateModified;
     private String displayName;

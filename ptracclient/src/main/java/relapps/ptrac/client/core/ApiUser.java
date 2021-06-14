@@ -75,6 +75,13 @@ public class ApiUser implements IApiUser {
     }
 
     @Override
+    public GsUser[] getUsersIncDeleted()
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getUsersIncDeleted"),
+                EHttpMethod.POST, GsUser[].class);
+    }
+
+    @Override
     public void saveUser(GsUser user)
             throws XHttpError, XApiError, XError, XAppError {
         _webClient.sendRequest(getService("/saveUser"),
