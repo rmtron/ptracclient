@@ -28,6 +28,10 @@ public class GsUser extends GsObject {
         return accesses;
     }
 
+    public String getAuthType() {
+        return authType;
+    }
+
     public String getCalendarOid() {
         return calendarOid;
     }
@@ -54,6 +58,10 @@ public class GsUser extends GsObject {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getEmployeeId() {
+        return employeeId;
     }
 
     public String getFirstName() {
@@ -97,6 +105,10 @@ public class GsUser extends GsObject {
         this.accesses = accesses;
     }
 
+    public void setAuthType(String authType) {
+        this.authType = authType;
+    }
+
     public void setCalendarOid(String calendarOid) {
         this.calendarOid = calendarOid;
     }
@@ -123,6 +135,10 @@ public class GsUser extends GsObject {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public void setEmployeeId(String employeeId) {
+        this.employeeId = employeeId;
     }
 
     public void setFirstName(String firstName) {
@@ -163,6 +179,7 @@ public class GsUser extends GsObject {
     }
 
     private int accesses;
+    private String authType;
     private String calendarOid;
     private String dateCreation;
     private String dateDeleted;
@@ -170,6 +187,7 @@ public class GsUser extends GsObject {
     private String dateModified;
     private String displayName;
     private String email;
+    private String employeeId;
     private String firstName;
     private String lastName;
     private boolean permAdminProject = false;
