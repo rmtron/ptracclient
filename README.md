@@ -18,6 +18,7 @@ You can download ptrac from: https://relapps.net
 * Data is stored in a relational database (MariaDB, MySQL or Postgresql)
 * Definition of users and groups
 * Roles and groups to control the permissions
+* User authentication with LDAP
 * Hierarchical definition of projects
 * Work-calendar definition with holidays and work hours
 * Private individual rich-text (markup) diary
