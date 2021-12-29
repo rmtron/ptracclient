@@ -18,6 +18,7 @@ import relapps.ptrac.client.gs.GsUser;
 import relapps.ptrac.client.gs.GsUserGroup;
 
 /**
+ * API for access to the user manager.
  *
  * @author RMT
  */
@@ -37,6 +38,19 @@ public interface IApiUser {
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
+     * Create a user from the data in LDAP.
+     *
+     * @param userId The user identifier (login).
+     * @return The user created or the exiting user.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsUser createUserFromLDAP(String userId)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Create a new user group.
      *
      * @param user The user group information.
@@ -47,6 +61,19 @@ public interface IApiUser {
      * @throws XError Thrown on error.
      */
     GsUserGroup createUserGroup(GsUserGroup user)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Lookup a user by the user login identifier.
+     *
+     * @param id The login identifier.
+     * @return The user found or null if not found.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsUser getUserByLogin(String id)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**

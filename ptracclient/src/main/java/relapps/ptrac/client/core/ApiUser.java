@@ -42,10 +42,24 @@ public class ApiUser implements IApiUser {
     }
 
     @Override
+    public GsUser createUserFromLDAP(String userId)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/createUserFromLDAP"),
+                EHttpMethod.POST, userId, GsUser.class);
+    }
+
+    @Override
     public GsUserGroup createUserGroup(GsUserGroup user)
             throws XHttpError, XApiError, XError, XAppError {
         return _webClient.sendRequest(getService("/createUserGroup"),
                 EHttpMethod.POST, GsUserGroup.class);
+    }
+
+    @Override
+    public GsUser getUserByLogin(String id)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getUserByLogin"),
+                EHttpMethod.POST, id, GsUser.class);
     }
 
     @Override
