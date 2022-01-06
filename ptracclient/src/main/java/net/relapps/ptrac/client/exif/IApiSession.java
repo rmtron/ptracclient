@@ -17,6 +17,7 @@ package net.relapps.ptrac.client.exif;
 import net.relapps.ptrac.client.gs.GsSession;
 
 /**
+ * API functions for user session handling.
  *
  * @author RMT
  */

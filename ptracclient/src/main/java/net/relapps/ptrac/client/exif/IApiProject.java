@@ -17,6 +17,7 @@ package net.relapps.ptrac.client.exif;
 import net.relapps.ptrac.client.gs.GsProject;
 
 /**
+ * API for project management,
  *
  * @author RMT
  */

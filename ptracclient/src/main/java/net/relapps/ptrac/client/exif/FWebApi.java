@@ -18,7 +18,7 @@ import java.net.MalformedURLException;
 import net.relapps.ptrac.client.core.WebApi;
 
 /**
- * WebApi factory.
+ * Handles the creation of the connection to the ptrac web API.
  *
  * @author RMT
  */
