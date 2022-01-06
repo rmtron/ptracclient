@@ -15,8 +15,8 @@
  */
 
 module relapps.ptracclient {
-    exports relapps.ptrac.client.exif;
-    exports relapps.ptrac.client.gs;
+    exports net.relapps.ptrac.client.exif;
+    exports net.relapps.ptrac.client.gs;
 
     requires com.google.gson;
     requires java.net.http;

@@ -15,12 +15,12 @@
  */
 package relapps.ptracexample.client;
 
-import relapps.ptrac.client.exif.FWebApi;
-import relapps.ptrac.client.exif.IWebApi;
-import relapps.ptrac.client.exif.XHttpError;
-import relapps.ptrac.client.gs.GsProject;
-import relapps.ptrac.client.gs.GsUser;
-import relapps.ptrac.client.gs.GsVersion;
+import net.relapps.ptrac.client.exif.FWebApi;
+import net.relapps.ptrac.client.exif.IWebApi;
+import net.relapps.ptrac.client.exif.XHttpError;
+import net.relapps.ptrac.client.gs.GsProject;
+import net.relapps.ptrac.client.gs.GsUser;
+import net.relapps.ptrac.client.gs.GsVersion;
 
 /**
  * Example accessing the ptrac Web Services.

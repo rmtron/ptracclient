@@ -1,10 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+    <name>${project.groupId}:${project.artifactId}</name>
+    <description>Java web service client utilities for ptrac</description>
+    <url>https://relapps.net</url>
     <groupId>net.relapps</groupId>
     <artifactId>ptracclient</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>1.2.6</version>
     <packaging>jar</packaging>
+    <licenses>
+        <license>
+            <name>The Apache License, Version 2.0</name>
+            <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+        </license>
+    </licenses>
+    <developers>
+        <developer>
+            <id>rmt</id>
+            <name>Reidar Tronstad</name>
+            <email>rmtron@gmail.com</email>
+        </developer>
+    </developers>
+    <scm>
+        <connection>scm:git:git://github.com/relapps/ptracclient.git</connection>
+        <url>https://github.com/rmtron/ptracclient/tree/master</url>
+    </scm>
     <build>
         <plugins>
             <plugin>
