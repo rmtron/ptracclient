@@ -6,7 +6,7 @@
     <url>https://relapps.net</url>
     <groupId>net.relapps</groupId>
     <artifactId>ptracclient</artifactId>
-    <version>1.2.6</version>
+    <version>1.2.7</version>
     <packaging>jar</packaging>
     <licenses>
         <license>

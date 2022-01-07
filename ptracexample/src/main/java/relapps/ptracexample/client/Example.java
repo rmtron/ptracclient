@@ -44,7 +44,7 @@ public class Example {
         final String rootURL = "http://localhost:9080";
         // The credentials for access to the web service.
         String apiUser = "admin";
-        String apiPassword = "password";
+        String apiPassword = "secret";
 
         IWebApi webapi = FWebApi.connect(rootURL, apiUser, apiPassword);
 
