@@ -46,6 +46,18 @@ public interface IApiProject {
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
+     * Delete a project.
+     *
+     * @param projectOid The project OID.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    void deleteProject(String projectOid)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Check if a project exists.
      *
      * @param projectName The project name.
@@ -69,6 +81,32 @@ public interface IApiProject {
      * @throws XError Thrown on error.
      */
     GsProject getProjectByName(String projectName)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Lookup a project by the project OID.
+     *
+     * @param projectOid The project OID.
+     * @return The project found, or null if not found.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsProject getProject(String projectOid)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Save a project
+     *
+     * @param project The project data to save.
+     * @return The project as saved.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsProject saveProject(GsProject project)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**

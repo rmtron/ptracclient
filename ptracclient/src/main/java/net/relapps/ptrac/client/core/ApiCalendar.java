@@ -23,6 +23,7 @@ import net.relapps.ptrac.client.exif.XHttpError;
 import net.relapps.ptrac.client.gs.GsCalendar;
 
 /**
+ * Calendar operations.
  *
  * @author RMT
  */
@@ -33,10 +34,38 @@ public class ApiCalendar implements IApiCalendar {
     }
 
     @Override
+    public GsCalendar createCalendar(GsCalendar cal) throws XHttpError,
+            XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/createCalendar"),
+                EHttpMethod.POST, cal, GsCalendar.class);
+    }
+
+    @Override
+    public void deleteCalendar(String calendarOid) throws XHttpError, XApiError,
+            XError, XAppError {
+        _webClient.sendRequest(getService("/deleteCalendar"),
+                EHttpMethod.POST, calendarOid);
+    }
+
+    @Override
+    public String exportCalendar(String calendarOid) throws XHttpError,
+            XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/exportCalendar"),
+                EHttpMethod.POST, calendarOid, String.class);
+    }
+
+    @Override
     public GsCalendar[] getCalendars()
             throws XHttpError, XApiError, XError, XAppError {
         return _webClient.sendRequest(getService("/getCalendars"),
                 EHttpMethod.POST, 0, GsCalendar[].class);
+    }
+
+    @Override
+    public GsCalendar saveCalendar(GsCalendar calendar) throws XHttpError,
+            XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/saveCalendar"),
+                EHttpMethod.POST, calendar, GsCalendar.class);
     }
 
     private String getService(String name) {

@@ -24,6 +24,44 @@ import net.relapps.ptrac.client.gs.GsCalendar;
 public interface IApiCalendar {
 
     /**
+     * Create a new calendar.
+     *
+     * @param cal The calendar data.
+     * @return The created calendar.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsCalendar createCalendar(GsCalendar cal)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Delete a calendar.
+     *
+     * @param calendarOid The calendar OID.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    void deleteCalendar(String calendarOid)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Export a calendar to JSON.
+     *
+     * @param calendarOid The calendar OID.
+     * @return The exported JSON string.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    String exportCalendar(String calendarOid)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Get the defined calendars.
      *
      * @return A list of the calendars.
@@ -33,4 +71,16 @@ public interface IApiCalendar {
      * @throws XError Thrown on error.
      */
     GsCalendar[] getCalendars() throws XHttpError, XApiError, XError, XAppError;
+    /**
+     * Save a calendar to the database.
+     *
+     * @param calendar The calendar data to save.
+     * @return The saved calendar.
+     * @throws XHttpError Error response from the backend.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsCalendar saveCalendar(GsCalendar calendar)
+            throws XHttpError, XApiError, XError, XAppError;
 }

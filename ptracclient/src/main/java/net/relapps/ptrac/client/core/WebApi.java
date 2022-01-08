@@ -17,6 +17,7 @@ package net.relapps.ptrac.client.core;
 import java.net.MalformedURLException;
 import net.relapps.ptrac.client.exif.EHttpMethod;
 import net.relapps.ptrac.client.exif.IApiCalendar;
+import net.relapps.ptrac.client.exif.IApiExportImport;
 import net.relapps.ptrac.client.exif.IApiMisc;
 import net.relapps.ptrac.client.exif.IWebApi;
 import net.relapps.ptrac.client.exif.XApiError;
@@ -79,6 +80,14 @@ public class WebApi implements IWebApi {
     }
 
     @Override
+    public IApiExportImport getExportImportApi() {
+        if (_apiExportImport == null) {
+            _apiExportImport = new ApiExportImport(_webClient);
+        }
+        return _apiExportImport;
+    }
+
+    @Override
     public IApiMisc getMiscApi() {
         if (_apiMisc == null) {
             _apiMisc = new ApiMisc(_webClient);
@@ -118,6 +127,7 @@ public class WebApi implements IWebApi {
         return _apiUser;
     }
     private ApiCalendar _apiCal;
+    private ApiExportImport _apiExportImport;
     private ApiMisc _apiMisc;
     private ApiProject _apiProject;
     private ApiSession _apiSession;

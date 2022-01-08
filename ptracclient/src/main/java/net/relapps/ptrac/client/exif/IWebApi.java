@@ -29,6 +29,13 @@ public interface IWebApi {
     IApiCalendar getCalendarApi();
 
     /**
+     * Returns the export/import operations API.
+     *
+     * @return The API.
+     */
+    IApiExportImport getExportImportApi();
+
+    /**
      * Returns the miscellaneous operations API.
      *
      * @return The API.

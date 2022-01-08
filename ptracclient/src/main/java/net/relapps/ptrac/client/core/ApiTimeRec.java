@@ -24,6 +24,8 @@ import net.relapps.ptrac.client.exif.XHttpError;
 import net.relapps.ptrac.client.gs.GsDateRange;
 import net.relapps.ptrac.client.gs.GsDateRangeOids;
 import net.relapps.ptrac.client.gs.GsDateRangeProject;
+import net.relapps.ptrac.client.gs.GsDay;
+import net.relapps.ptrac.client.gs.GsDayRecord;
 import net.relapps.ptrac.client.gs.GsPeriod;
 import net.relapps.ptrac.client.gs.GsProjectUserTime;
 import net.relapps.ptrac.client.gs.GsTimeAccum;
@@ -41,6 +43,36 @@ public class ApiTimeRec implements IApiTimeRec {
     }
 
     @Override
+    public void freezeDaysForAll(GsDateRange range)
+            throws XHttpError, XApiError, XError, XAppError {
+        _webClient.sendRequest(getService("/freezeDaysForAll"),
+                EHttpMethod.POST, range);
+    }
+
+    @Override
+    public GsPeriod getCurrentPeriod()
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getCurrentPeriod"),
+                EHttpMethod.POST, GsPeriod.class);
+    }
+
+    @Override
+    public GsDayRecord[] getDayRecordsUser(String userOid, GsDateRange range)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getDayRecordsUser"),
+                EHttpMethod.POST, getRangeOid(userOid, range),
+                GsDayRecord[].class);
+    }
+
+    @Override
+    public GsDay[] getDaysUser(String userOid, GsDateRange range)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getDaysUser"),
+                EHttpMethod.POST, getRangeOid(userOid, range),
+                GsDay[].class);
+    }
+
+    @Override
     public byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
             String[] oidGroups)
             throws XHttpError, XApiError, XError, XAppError {
@@ -48,10 +80,27 @@ public class ApiTimeRec implements IApiTimeRec {
         inp.setFrom(dateFrom.toString());
         inp.setTo(dateTo.toString());
         inp.setOids(oidGroups);
-        byte data[]
-                = _webClient.sendBlobRequest(getService("/getExcelGroups"),
-                        EHttpMethod.POST, inp);
-        return data;
+        return _webClient.sendBlobRequest(getService("/getExcelGroups"),
+                EHttpMethod.POST, inp);
+    }
+
+    @Override
+    public byte[] getOdsGroups(LocalDate dateFrom, LocalDate dateTo,
+            String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError {
+        GsDateRangeOids inp = new GsDateRangeOids();
+        inp.setFrom(dateFrom.toString());
+        inp.setTo(dateTo.toString());
+        inp.setOids(oidGroups);
+        return _webClient.sendBlobRequest(getService("/getOdsGroups"),
+                EHttpMethod.POST, inp);
+    }
+
+    @Override
+    public GsPeriod getPeriod(String periodId)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getPeriod"),
+                EHttpMethod.POST, periodId, GsPeriod.class);
     }
 
     @Override
@@ -64,8 +113,8 @@ public class ApiTimeRec implements IApiTimeRec {
     }
 
     @Override
-    public GsPeriod[] getTimePeriods(int year) throws XHttpError, XApiError,
-            XError, XAppError {
+    public GsPeriod[] getTimePeriods(int year)
+            throws XHttpError, XApiError, XError, XAppError {
         return _webClient.sendRequest(getService("/getTimePeriods"),
                 EHttpMethod.POST, year, GsPeriod[].class);
     }
@@ -116,6 +165,15 @@ public class ApiTimeRec implements IApiTimeRec {
                 = _webClient.sendRequest(getService("/getTimeRecordsProject"),
                         EHttpMethod.POST, inp, GsTimeRecord[].class);
         return records;
+    }
+
+    private GsDateRangeOids getRangeOid(String oid, GsDateRange range) {
+        GsDateRangeOids rangeOid = new GsDateRangeOids();
+        rangeOid.setFrom(range.getFrom());
+        rangeOid.setTo(range.getTo());
+        String oids[] = {oid};
+        rangeOid.setOids(oids);
+        return rangeOid;
     }
 
     private String getService(String name) {

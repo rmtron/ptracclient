@@ -1,5 +1,5 @@
 /*
- * Copyright(c) 2020 RELapps (https://relapps.net)
+ * Copyright(c) 2022 RELapps (https://relapps.net)
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
@@ -14,60 +14,53 @@
  */
 package net.relapps.ptrac.client.exif;
 
-import net.relapps.ptrac.client.gs.GsSession;
-import net.relapps.ptrac.client.gs.GsSessionInfo;
+import net.relapps.ptrac.client.gs.GsExport;
+import net.relapps.ptrac.client.gs.GsExportTimeRecords;
+import net.relapps.ptrac.client.gs.GsImportData;
+import net.relapps.ptrac.client.gs.GsText;
 
 /**
- * API functions for user session handling.
  *
  * @author RMT
  */
-public interface IApiSession {
+public interface IApiExportImport {
 
     /**
-     * Forget (dispose) the session.
+     * Export data from the ptrac database to ptrac export format (zip).
      *
-     * @throws XHttpError Error response from the back-end.
+     * @param export Specifies what to export.
+     * @return The exported data in ptrac export format (zip).
+     * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
      * @throws XAppError Thrown on error in the back-end application.
      * @throws XError Thrown on error.
      */
-    void forgetSession() throws XHttpError, XApiError, XError, XAppError;
-
-    /**
-     * Get information about the current session.
-     *
-     * @return The session information.
-     * @throws XHttpError Error response from the back-end.
-     * @throws XApiError Error in the API sending/receiving request.
-     * @throws XAppError Thrown on error in the back-end application.
-     * @throws XError Thrown on error.
-     */
-    GsSession getCurrentSession()
+    byte[] export(GsExport export)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
-     * Returns the maximum inactive session duration in seconds before closing
-     * the session.
+     * Export time records from the ptrad database to ptrac export format (zip).
      *
-     * @return The time in seconds.
-     * @throws XHttpError Error response from the back-end.
+     * @param export Specifies what to export.
+     * @return The exported data in ptrac export format (zip).
+     * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
      * @throws XAppError Thrown on error in the back-end application.
      * @throws XError Thrown on error.
      */
-    Integer getSessionDuration()
+    byte[] exportTimerecords(GsExportTimeRecords export)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
-     * Returns the active sessions.
+     * Import data from a file with ptrac export format.
      *
-     * @return A vector with the sessions.
-     * @throws XHttpError Error response from the back-end.
+     * @param data The data to import.
+     * @return The status description of the import.
+     * @throws XHttpError Error response from the backend.
      * @throws XApiError Error in the API sending/receiving request.
      * @throws XAppError Thrown on error in the back-end application.
      * @throws XError Thrown on error.
      */
-    GsSessionInfo[] getSessions()
+    GsText importData(GsImportData data)
             throws XHttpError, XApiError, XError, XAppError;
 }

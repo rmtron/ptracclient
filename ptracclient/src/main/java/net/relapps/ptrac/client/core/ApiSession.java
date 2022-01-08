@@ -21,6 +21,7 @@ import net.relapps.ptrac.client.exif.XAppError;
 import net.relapps.ptrac.client.exif.XError;
 import net.relapps.ptrac.client.exif.XHttpError;
 import net.relapps.ptrac.client.gs.GsSession;
+import net.relapps.ptrac.client.gs.GsSessionInfo;
 
 /**
  * API for session related operations.
@@ -52,6 +53,14 @@ public class ApiSession implements IApiSession {
         return _webClient.sendRequest(getService("/getSessionDuration"),
                 EHttpMethod.POST, Integer.class);
     }
+
+    @Override
+    public GsSessionInfo[] getSessions()
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/getSessions"),
+                EHttpMethod.POST, GsSessionInfo[].class);
+    }
+
     private String getService(String name) {
         return _prefix + name;
     }

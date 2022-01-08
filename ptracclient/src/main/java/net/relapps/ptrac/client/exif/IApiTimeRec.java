@@ -15,7 +15,10 @@
 package net.relapps.ptrac.client.exif;
 
 import java.time.LocalDate;
+import net.relapps.ptrac.client.gs.GsDateRange;
 import net.relapps.ptrac.client.gs.GsDateRangeOids;
+import net.relapps.ptrac.client.gs.GsDay;
+import net.relapps.ptrac.client.gs.GsDayRecord;
 import net.relapps.ptrac.client.gs.GsPeriod;
 import net.relapps.ptrac.client.gs.GsProjectUserTime;
 import net.relapps.ptrac.client.gs.GsTimeAccum;
@@ -29,12 +32,64 @@ import net.relapps.ptrac.client.gs.GsTimeRecord;
 public interface IApiTimeRec {
 
     /**
+     * Freeze period for all users.
+     *
+     * @param range The data range (period).
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    void freezeDaysForAll(GsDateRange range)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Return the current period.
+     *
+     * @return The current period.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsPeriod getCurrentPeriod()
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Returns the day records for a user in a date range.
+     *
+     * @param userOid The user OID.
+     * @param range The date range with the OID for the user.
+     * @return The day records.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsDayRecord[] getDayRecordsUser(String userOid, GsDateRange range)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Returns the days for a period using the calendar for the specified user.
+     *
+     * @param userOid The user OID.
+     * @param range The date range with the OID for the user.
+     * @return The day data for the specified range and user.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsDay[] getDaysUser(String userOid, GsDateRange range)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Returns an Excel report for the specified date range and groups.
      *
      * @param dateFrom The date from.
      * @param dateTo The date to.
      * @param oidGroups A list of the group OIDs.
-     * @return An excel file.
+     * @return An Excel byte data.
      * @throws XHttpError Error response from the back-end.
      * @throws XApiError Error in the API sending/receiving request.
      * @throws XAppError Thrown on error in the back-end application.
@@ -42,6 +97,35 @@ public interface IApiTimeRec {
      */
     byte[] getExcelGroups(LocalDate dateFrom, LocalDate dateTo,
             String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Returns an report in ODS format for the specified date range and groups.
+     *
+     * @param dateFrom The date from.
+     * @param dateTo The date to.
+     * @param oidGroups A list of the group OIDs.
+     * @return An ODS byte data.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    byte[] getOdsGroups(LocalDate dateFrom, LocalDate dateTo,
+            String[] oidGroups)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Returns the period data for the specified period identifier.
+     *
+     * @param periodId The period identifier.
+     * @return The period data.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsPeriod getPeriod(String periodId)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**

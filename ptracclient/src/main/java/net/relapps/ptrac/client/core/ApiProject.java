@@ -36,28 +36,37 @@ public class ApiProject implements IApiProject {
     @Override
     public GsProject createProject(GsProject project)
             throws XHttpError, XApiError, XError, XAppError {
-        GsProject newProject = _webClient.
+        return _webClient.
                 sendRequest(getService("/createProject"), EHttpMethod.POST,
                         project, GsProject.class);
-        return newProject;
+    }
+
+    @Override
+    public void deleteProject(String projectOid) throws XHttpError, XApiError,
+            XError, XAppError {
+        _webClient.sendRequest(getService("/deleteProject"),
+                EHttpMethod.POST, projectOid);
     }
 
     @Override
     public Boolean existsProjectByName(String projectName) throws XHttpError,
             XApiError, XError, XAppError {
-        Boolean exists = _webClient.
-                sendRequest(getService("/existsProjectByName"), EHttpMethod.POST,
-                        projectName, Boolean.class);
-        return exists;
+        return _webClient.sendRequest(getService("/existsProjectByName"),
+                EHttpMethod.POST, projectName, Boolean.class);
+    }
+
+    @Override
+    public GsProject getProject(String projectOid) throws XHttpError, XApiError,
+            XError, XAppError {
+        return _webClient.sendRequest(getService("/getProject"),
+                EHttpMethod.POST, projectOid, GsProject.class);
     }
 
     @Override
     public GsProject getProjectByName(String projectName)
             throws XHttpError, XApiError, XError, XAppError {
-        GsProject project = _webClient.
-                sendRequest(getService("/getProjectByName"), EHttpMethod.POST,
-                        projectName, GsProject.class);
-        return project;
+        return _webClient.sendRequest(getService("/getProjectByName"),
+                EHttpMethod.POST, projectName, GsProject.class);
     }
 
     @Override
@@ -66,6 +75,14 @@ public class ApiProject implements IApiProject {
         return _webClient.sendRequest(getService("/getProjects"),
                 EHttpMethod.POST, GsProject[].class);
     }
+
+    @Override
+    public GsProject saveProject(GsProject project)
+            throws XHttpError, XApiError, XError, XAppError {
+        return _webClient.sendRequest(getService("/saveProject"),
+                EHttpMethod.POST, project, GsProject.class);
+        }
+
     private String getService(String name) {
         return _prefix + name;
     }
