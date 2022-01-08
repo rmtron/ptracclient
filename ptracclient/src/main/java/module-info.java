@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-module relapps.ptracclient {
+module net.relapps.ptracclient {
     exports net.relapps.ptrac.client.exif;
     exports net.relapps.ptrac.client.gs;
 
