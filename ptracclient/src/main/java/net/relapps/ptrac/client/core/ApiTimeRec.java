@@ -69,8 +69,8 @@ public class ApiTimeRec implements IApiTimeRec {
             LocalDate dateFrom, LocalDate dateTo)
             throws XHttpError, XApiError, XError, XAppError {
         GsDateRange inp = new GsDateRange();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
+        inp.setFrom(toDateString(dateFrom));
+        inp.setTo(toDateString(dateTo));
         return getDayRecordsUser(userOid, inp);
     }
 
@@ -86,8 +86,8 @@ public class ApiTimeRec implements IApiTimeRec {
     public GsDay[] getDaysUser(String userOid, LocalDate dateFrom,
             LocalDate dateTo) throws XHttpError, XApiError, XError, XAppError {
         GsDateRange inp = new GsDateRange();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
+        inp.setFrom(toDateString(dateFrom));
+        inp.setTo(toDateString(dateTo));
         return getDaysUser(userOid, inp);
     }
 
@@ -96,8 +96,8 @@ public class ApiTimeRec implements IApiTimeRec {
             String[] oidGroups)
             throws XHttpError, XApiError, XError, XAppError {
         GsDateRangeOids inp = new GsDateRangeOids();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
+        inp.setFrom(toDateString(dateFrom));
+        inp.setTo(toDateString(dateTo));
         inp.setOids(oidGroups);
         return _webClient.sendBlobRequest(getService("/getExcelGroups"),
                 EHttpMethod.POST, inp);
@@ -108,8 +108,8 @@ public class ApiTimeRec implements IApiTimeRec {
             String[] oidGroups)
             throws XHttpError, XApiError, XError, XAppError {
         GsDateRangeOids inp = new GsDateRangeOids();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
+        inp.setFrom(toDateString(dateFrom));
+        inp.setTo(toDateString(dateTo));
         inp.setOids(oidGroups);
         return _webClient.sendBlobRequest(getService("/getOdsGroups"),
                 EHttpMethod.POST, inp);
@@ -142,8 +142,8 @@ public class ApiTimeRec implements IApiTimeRec {
     public GsTimeRecord[] getTimeRecords(LocalDate dateFrom, LocalDate dateTo)
             throws XHttpError, XApiError, XError, XAppError {
         GsDateRange dateRange = new GsDateRange();
-        dateRange.setFrom(dateFrom.toString());
-        dateRange.setTo(dateTo.toString());
+        dateRange.setFrom(toDateString(dateFrom));
+        dateRange.setTo(toDateString(dateTo));
         return _webClient.sendRequest(getService("/getTimeRecordsDateRange"),
                 EHttpMethod.POST, dateRange, GsTimeRecord[].class);
     }
@@ -153,8 +153,8 @@ public class ApiTimeRec implements IApiTimeRec {
             LocalDate dateFrom, LocalDate dateTo)
             throws XHttpError, XApiError, XError, XAppError {
         GsDateRangeOids inp = new GsDateRangeOids();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
+        inp.setFrom(toDateString(dateFrom));
+        inp.setTo(toDateString(dateTo));
         inp.setOids(oidGroups);
         return _webClient.sendRequest(getService("/getTimeRecordsGroups"),
                 EHttpMethod.POST, inp, GsTimeRecord[].class);
@@ -165,8 +165,8 @@ public class ApiTimeRec implements IApiTimeRec {
             LocalDate dateFrom, LocalDate dateTo)
             throws XHttpError, XApiError, XError, XAppError {
         GsDateRangeOids inp = new GsDateRangeOids();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
+        inp.setFrom(toDateString(dateFrom));
+        inp.setTo(toDateString(dateTo));
         inp.setOids(oidGroups);
         return _webClient.sendRequest(getService("/getTimeRecordsGroupsAcc"),
                 EHttpMethod.POST, inp, GsTimeAccum[].class);
@@ -177,8 +177,8 @@ public class ApiTimeRec implements IApiTimeRec {
             LocalDate dateFrom, LocalDate dateTo)
             throws XHttpError, XApiError, XError, XAppError {
         GsDateRangeProject inp = new GsDateRangeProject();
-        inp.setFrom(dateFrom.toString());
-        inp.setTo(dateTo.toString());
+        inp.setFrom(toDateString(dateFrom));
+        inp.setTo(toDateString(dateTo));
         inp.setProjectOid(oidProject);
         GsTimeRecord records[]
                 = _webClient.sendRequest(getService("/getTimeRecordsProject"),
@@ -197,6 +197,14 @@ public class ApiTimeRec implements IApiTimeRec {
 
     private String getService(String name) {
         return _prefix + name;
+    }
+
+    private String toDateString(LocalDate date) {
+        if (date != null) {
+            return date.toString();
+        } else {
+            return null;
+        }
     }
     private final String _prefix = "/timerec";
     private final WebClient _webClient;
