@@ -70,6 +70,22 @@ public interface IApiTimeRec {
             throws XHttpError, XApiError, XError, XAppError;
 
     /**
+     * Returns the day records for a user in a date range.
+     *
+     * @param userOid The user OID.
+     * @param dateFrom The date from.
+     * @param dateTo The date to.
+     * @return The day records.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsDayRecord[] getDayRecordsUser(String userOid,
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
      * Returns the days for a period using the calendar for the specified user.
      *
      * @param userOid The user OID.
@@ -81,6 +97,21 @@ public interface IApiTimeRec {
      * @throws XError Thrown on error.
      */
     GsDay[] getDaysUser(String userOid, GsDateRange range)
+            throws XHttpError, XApiError, XError, XAppError;
+
+    /**
+     * Returns the days for a period using the calendar for the specified user.
+     *
+     * @param userOid The user OID.
+     * @param dateFrom The date from.
+     * @param dateTo The date to.
+     * @return The day data for the specified range and user.
+     * @throws XHttpError Error response from the back-end.
+     * @throws XApiError Error in the API sending/receiving request.
+     * @throws XAppError Thrown on error in the back-end application.
+     * @throws XError Thrown on error.
+     */
+    GsDay[] getDaysUser(String userOid, LocalDate dateFrom, LocalDate dateTo)
             throws XHttpError, XApiError, XError, XAppError;
 
     /**

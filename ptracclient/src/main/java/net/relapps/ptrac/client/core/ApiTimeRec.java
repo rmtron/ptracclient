@@ -65,11 +65,30 @@ public class ApiTimeRec implements IApiTimeRec {
     }
 
     @Override
+    public GsDayRecord[] getDayRecordsUser(String userOid,
+            LocalDate dateFrom, LocalDate dateTo)
+            throws XHttpError, XApiError, XError, XAppError {
+        GsDateRange inp = new GsDateRange();
+        inp.setFrom(dateFrom.toString());
+        inp.setTo(dateTo.toString());
+        return getDayRecordsUser(userOid, inp);
+    }
+
+    @Override
     public GsDay[] getDaysUser(String userOid, GsDateRange range)
             throws XHttpError, XApiError, XError, XAppError {
         return _webClient.sendRequest(getService("/getDaysUser"),
                 EHttpMethod.POST, getRangeOid(userOid, range),
                 GsDay[].class);
+    }
+
+    @Override
+    public GsDay[] getDaysUser(String userOid, LocalDate dateFrom,
+            LocalDate dateTo) throws XHttpError, XApiError, XError, XAppError {
+        GsDateRange inp = new GsDateRange();
+        inp.setFrom(dateFrom.toString());
+        inp.setTo(dateTo.toString());
+        return getDaysUser(userOid, inp);
     }
 
     @Override

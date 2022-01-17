@@ -37,6 +37,11 @@ public class GsDayRecord extends GsObject {
         return time;
     }
 
+    @SuppressWarnings("ReturnOfCollectionOrArrayField")
+    public GsTimeCalcRec[] getTimeCalcRec() {
+        return timeCalcRec;
+    }
+
     public String getUserOid() {
         return userOid;
     }
@@ -65,6 +70,11 @@ public class GsDayRecord extends GsObject {
         this.time = time;
     }
 
+    @SuppressWarnings("AssignmentToCollectionOrArrayFieldFromParameter")
+    public void setTimeCalcRec(GsTimeCalcRec[] timeCalcRec) {
+        this.timeCalcRec = timeCalcRec;
+    }
+
     public void setUserOid(String userOid) {
         this.userOid = userOid;
     }
@@ -73,5 +83,6 @@ public class GsDayRecord extends GsObject {
     private String date;
     private boolean frozen;
     private String time;
+    private GsTimeCalcRec timeCalcRec[];
     private String userOid;
 }
