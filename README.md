@@ -12,6 +12,18 @@ You can download ptrac from: https://relapps.net
 
 ---
 
+## Maven
+
+```
+   <dependency>
+       <groupId>net.relapps</groupId>
+       <artifactId>ptracclient</artifactId>
+       <version>1.3.0</version>
+   </dependency>
+```
+
+---
+
 ## *ptrac* Project Time Tracking Software
 * Free (no ads) self-hosted web application
 * The application runs in a Servlet Container such as Tomcat
@@ -21,6 +33,7 @@ You can download ptrac from: https://relapps.net
 * User authentication with LDAP
 * Hierarchical definition of projects
 * Work-calendar definition with holidays and work hours
+* Register of time worked (start and end time)
 * Private individual rich-text (markup) diary
 * Printing of time-sheets with annotations
 * Reports (Excel and Open Document Format ODF)
