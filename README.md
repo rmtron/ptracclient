@@ -35,7 +35,7 @@ You can download ptrac from: https://relapps.net
 * Work-calendar definition with holidays and work hours
 * Register of time worked (start and end time)
 * Private individual rich-text (markup) diary
-* Printing of time-sheets with annotations
+* Printing of time-sheets/timecard with annotations
 * Reports (Excel and Open Document Format ODF)
 * Export and import between databases
 * Web service API (example applications in this repository)
