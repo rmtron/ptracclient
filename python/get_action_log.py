@@ -14,8 +14,8 @@
 #
 ##############################################################################
 #
-# This is a Python example using the ptrac REST API for exporting projects
-# to a file which can be imported in ptrac.
+# This is a Python example using the ptrac REST API for extraction of the
+# action/event log to CSV file.
 #
 # Please feel free to use and modify the example as you wish.
 #
@@ -28,25 +28,18 @@
 # Use implementation from ptraclib
 import sys
 
-sys.path.append('../ptraclib')
-
-from ptracapi import PtracApi
+from lib.ptracapi import PtracApi,get_api
 import datetime
 
 #################################################################
-# Input parameters
 
-# The ptrac URL
-inp_url = 'http://localhost:9080/'
 
 # The output folder
 # out_folder = '/home/user/projects'
-out_folder = '/home/user/output'
+out_folder = './output'
 
-# The user name and password for the access to ptrac
-inp_user = 'admin'
-inp_password = 'secret'
-
+# Open the connection to ptrac.
+api = get_api()
 
 #################################################################
 
@@ -54,28 +47,40 @@ inp_password = 'secret'
 def get_filename():
     now = datetime.datetime.now()
     date_string = now.strftime('%Y-%m-%d-%H%M')
-    return out_folder + '/projects_' + date_string + '.ptrac'
+    return out_folder + '/action_log_' + date_string + '.csv'
 
 
 def main():
-    api = PtracApi(inp_url)
-    version = api.get_version()
-    print(version['versionString'])
-
-    session = api.authenticate(inp_user, inp_password)
-    if session is None:
-        print('Error: Invalid credentials?')
-        quit()
-    data = api.export_projects()
-
-    print('Finished')
+    events = api.get_action_log()
+    user_map = {}
     file_name = get_filename()
-    f = open(file_name, "ab")
-    f.write(data)
+    f = open(file_name, "a")
+    for event in events:
+        action = event['action']
+        user_oid = event['user']
+        message = event['message']
+        timestamp = event['timestamp']
+        if user_oid not in user_map:
+            user = api.get_user(user_oid)
+            user_map[user_oid] = user
+        else:
+            user = user_map[user_oid]
+        user_name = user['displayName']
+        # print(timestamp, ',', action, ',', user_name, ',', message)
+        line = ''
+        line += timestamp + ','
+        line += action + ','
+        line += user_name + ','
+        line += message + '\n'
+        f.write(line)
+
     f.close()
     print('Generated file: ' + file_name)
 
 
 # Call the main function
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as ex:
+        print('ERROR: ', ex)

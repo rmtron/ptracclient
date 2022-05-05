@@ -27,41 +27,26 @@
 # Use implementation from ptraclib
 import sys
 
-sys.path.append('../ptraclib')
-
-from ptracapi import PtracApi
-from timerecuser import TimeRecUser
+from lib.ptracapi import PtracApi, get_api
+from lib.timerecuser import TimeRecUser
 
 def main():
     #################################################################
-    # Input parameters
 
-    # The ptrac URL
-    inp_url = 'http://localhost:9080/'
-
-    # The user name and password for the access to ptrac
-    inp_user = 'admin'
-    inp_password = 'secret'
+    # Open the connection to ptrac.
+    api = get_api()
 
     # The user group for the report
-    inp_group = 'GroupName'
+    inp_group = input('Group name: ')
 
     # The date range
-    inp_date_from = '2021-01-01'
-    inp_date_to = '2021-01-31'
+    inp_date_from = input('Start date (YYYY-MM-DD): ')
+    inp_date_to = input('End date (YYYY-MM-DD): ')
 
     #################################################################
 
-    api = PtracApi(inp_url)
-    version = api.get_version()
-    print(version['versionString'])
     print('Date range ', inp_date_from, '-', inp_date_to)
     print('user group: ', inp_group)
-
-    session = api.authenticate(inp_user, inp_password)
-    if session is None:
-        print('Error: Invalid credentials?')
-        quit()
 
     groups = api.get_user_groups();
     group_oid = None
@@ -131,4 +116,7 @@ def main():
 
 # Call the main function
 if __name__ == '__main__':
-    main()
+    try:
+        main()
+    except Exception as ex:
+        print('ERROR: ', ex)
